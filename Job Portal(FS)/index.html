@@ -1,68 +1,1060 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>My Job Portal</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="CareerHub - India's fastest-growing job portal. Find jobs, internships, and career opportunities from top companies." />
+    <title>CareerHub - Find Your Dream Career</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-    
-    <div class="header">
-        <h1>CareerHub</h1>
-        <p>Your Gateway to Opportunities</p>
-    </div>
-
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">Jobs</a>
-        <a href="#">Internships</a>
-        <a href="#">Contact</a>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search jobs...">
-        </div>
-        <a href="#" class="nav-btn login-btn">Login</a>
-        <a href="#" class="nav-btn register-btn">Register</a>
-    </div>
-
-    <div class="container">
-
-        <div class="welcome">
-            <h2>Welcome</h2>
-            <p>
-                This is my first job searching website created using
-                HTML and CSS. It helps students and freshers find
-                opportunities easily.
-            </p>
-        </div>
-
-        <div class="jobs">
-
-            <div class="job-card">
-                <h3>Web Developer Intern</h3>
-                <p>Company: ABC Tech</p>
-                <p>Location: Remote</p>
+    <div id="root">
+        <div
+            style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0f0c29;flex-direction:column;gap:16px;">
+            <div style="font-size:2.5rem;">💼</div>
+            <div style="color:white;font-family:'Inter',sans-serif;font-size:22px;font-weight:800;">Career<span
+                    style="color:#818cf8;">Hub</span></div>
+            <div
+                style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.15);border-top-color:#818cf8;border-radius:50%;animation:s 0.8s linear infinite;">
             </div>
-
-            <div class="job-card">
-                <h3>Software Engineer</h3>
-                <p>Company: XYZ Solutions</p>
-                <p>Location: Bangalore</p>
-            </div>
-
-            <div class="job-card">
-                <h3>Data Analyst Intern</h3>
-                <p>Company: DataWorks</p>
-                <p>Location: Chennai</p>
-            </div>
-
+            <style>
+                @keyframes s {
+                    to {
+                        transform: rotate(360deg)
+                    }
+                }
+            </style>
         </div>
-
-    </div>
-  
-    <div class="footer">
-        <p>© 2026 CareerHub - Your Career Starts Here</p>
     </div>
 
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        /* ============================================================
+           DATABASE LAYER
+           ============================================================ */
+        const DB = {
+            seedJobs: [
+                { id: "j1", title: "Frontend Developer", company: "TechNova Solutions", location: "Bangalore", type: "Full-time", category: "Technology", salary: "₹8–12 LPA", experience: "1–3 Years", description: "We are looking for a passionate Frontend Developer skilled in React, HTML5, CSS3, and JavaScript. You will build responsive, pixel-perfect UIs for our SaaS platform used by thousands of businesses.", requirements: ["React.js", "HTML/CSS", "JavaScript ES6+", "REST APIs", "Git"], postedBy: "emp1", postedAt: "2026-04-15", deadline: "2026-05-15", logo: "💻", applicants: 34, featured: true },
+                { id: "j2", title: "Data Analyst Intern", company: "DataWorks Analytics", location: "Chennai", type: "Internship", category: "Data Science", salary: "₹15,000/month", experience: "Fresher", description: "Join our data team to analyse business data, build dashboards, and deliver actionable insights. Great learning opportunity with mentorship from senior analysts.", requirements: ["Python", "SQL", "Excel", "Power BI", "Statistics"], postedBy: "emp2", postedAt: "2026-04-14", deadline: "2026-05-10", logo: "📊", applicants: 58, featured: true },
+                { id: "j3", title: "Software Engineer", company: "XYZ Solutions", location: "Hyderabad", type: "Full-time", category: "Technology", salary: "₹10–15 LPA", experience: "2–5 Years", description: "Build scalable backend services using Java/Spring Boot. Work on distributed systems, microservices, and cloud-native architecture with a world-class engineering team.", requirements: ["Java", "Spring Boot", "MySQL", "Docker", "Microservices"], postedBy: "emp3", postedAt: "2026-04-12", deadline: "2026-05-20", logo: "⚙️", applicants: 21, featured: false },
+                { id: "j4", title: "UI/UX Designer", company: "CreativeMinds", location: "Remote", type: "Remote", category: "Design", salary: "₹6–10 LPA", experience: "1–3 Years", description: "Design beautiful user experiences for web and mobile apps. Collaborate with product managers and developers to create intuitive, accessible interfaces loved by users.", requirements: ["Figma", "Adobe XD", "Prototyping", "User Research", "Design Systems"], postedBy: "emp4", postedAt: "2026-04-10", deadline: "2026-05-05", logo: "🎨", applicants: 47, featured: true },
+                { id: "j5", title: "Digital Marketing Executive", company: "GrowthHack Agency", location: "Mumbai", type: "Full-time", category: "Marketing", salary: "₹4–7 LPA", experience: "0–2 Years", description: "Drive digital marketing campaigns across SEO, SEM, and social media. Analyse performance metrics and grow our online presence for leading D2C brands.", requirements: ["SEO/SEM", "Google Ads", "Social Media", "Analytics", "Content Writing"], postedBy: "emp5", postedAt: "2026-04-08", deadline: "2026-05-01", logo: "📢", applicants: 62, featured: false },
+                { id: "j6", title: "Backend Developer", company: "CloudBase Tech", location: "Pune", type: "Full-time", category: "Technology", salary: "₹12–18 LPA", experience: "3–6 Years", description: "Design and develop high-performance backend APIs. Experience with Node.js, PostgreSQL, and cloud deployments on AWS/GCP required. Lead a small team of junior developers.", requirements: ["Node.js", "PostgreSQL", "AWS", "REST APIs", "TypeScript"], postedBy: "emp1", postedAt: "2026-04-07", deadline: "2026-04-30", logo: "🖥️", applicants: 29, featured: false },
+                { id: "j7", title: "Machine Learning Engineer", company: "AI Forge Labs", location: "Bangalore", type: "Full-time", category: "Data Science", salary: "₹18–25 LPA", experience: "2–5 Years", description: "Build and deploy ML models for computer vision and NLP applications. Work on cutting-edge AI research projects with a team of top scientists and engineers.", requirements: ["Python", "TensorFlow", "PyTorch", "MLOps", "Deep Learning"], postedBy: "emp2", postedAt: "2026-04-05", deadline: "2026-05-25", logo: "🤖", applicants: 15, featured: true },
+                { id: "j8", title: "HR Recruiter", company: "PeopleFirst HR", location: "Delhi", type: "Part-time", category: "Human Resources", salary: "₹3–5 LPA", experience: "0–2 Years", description: "Source, screen, and recruit candidates for IT roles. Manage end-to-end hiring cycles and build talent pipelines for our growing client base.", requirements: ["Recruitment", "LinkedIn", "ATS Tools", "Communication", "HR Basics"], postedBy: "emp4", postedAt: "2026-04-03", deadline: "2026-04-28", logo: "👥", applicants: 38, featured: false },
+                { id: "j9", title: "Full Stack Developer", company: "StartupNest", location: "Remote", type: "Remote", category: "Technology", salary: "₹10–16 LPA", experience: "2–4 Years", description: "Join a fast-paced startup building a B2B SaaS platform. Own features from database design to pixel-perfect UI. Equity + competitive salary.", requirements: ["React", "Node.js", "MongoDB", "Docker", "Git"], postedBy: "emp3", postedAt: "2026-04-02", deadline: "2026-05-18", logo: "🚀", applicants: 52, featured: false },
+                { id: "j10", title: "Finance Analyst", company: "WealthBridge Capital", location: "Mumbai", type: "Full-time", category: "Finance", salary: "₹7–11 LPA", experience: "1–3 Years", description: "Perform financial modelling, budgeting, and variance analysis. Support senior analysts with reports and dashboards for management decision-making.", requirements: ["Excel", "Financial Modelling", "Tally", "Accounting", "CA/MBA Finance"], postedBy: "emp5", postedAt: "2026-04-01", deadline: "2026-04-30", logo: "💰", applicants: 44, featured: false },
+                { id: "j11", title: "Content Writer", company: "WordCraft Studio", location: "Remote", type: "Remote", category: "Marketing", salary: "₹3–6 LPA", experience: "Fresher", description: "Write SEO-optimised blog posts, articles, and website copy for technology and lifestyle brands. Strong portfolio and passion for storytelling required.", requirements: ["SEO Writing", "Grammar", "Research", "WordPress", "Creativity"], postedBy: "emp4", postedAt: "2026-03-30", deadline: "2026-04-25", logo: "✍️", applicants: 71, featured: false },
+                { id: "j12", title: "Cloud Solutions Architect", company: "NexGen Cloud", location: "Hyderabad", type: "Full-time", category: "Technology", salary: "₹22–35 LPA", experience: "5+ Years", description: "Architect enterprise-grade cloud solutions on AWS/Azure. Lead technical teams and engage with C-level stakeholders on digital transformation strategies.", requirements: ["AWS", "Azure", "Solutions Architecture", "DevOps", "Terraform"], postedBy: "emp3", postedAt: "2026-03-28", deadline: "2026-05-10", logo: "☁️", applicants: 18, featured: true }
+            ],
+            seedUsers: [
+                { id: "emp1", name: "Ravi Kumar", email: "ravi@technova.com", password: "emp123", role: "employer", company: "TechNova Solutions", avatar: "RK" },
+                { id: "emp2", name: "Priya Singh", email: "priya@dataworks.com", password: "emp123", role: "employer", company: "DataWorks Analytics", avatar: "PS" },
+                { id: "emp3", name: "Arun Mehta", email: "arun@xyz.com", password: "emp123", role: "employer", company: "XYZ Solutions", avatar: "AM" },
+                { id: "emp4", name: "Sneha Joshi", email: "sneha@creative.com", password: "emp123", role: "employer", company: "CreativeMinds", avatar: "SJ" },
+                { id: "emp5", name: "Kiran Reddy", email: "kiran@growthhack.com", password: "emp123", role: "employer", company: "GrowthHack Agency", avatar: "KR" },
+                { id: "u1", name: "Arjun Sharma", email: "arjun@gmail.com", password: "user123", role: "seeker", skills: "React, JavaScript, Node.js", avatar: "AS" },
+                { id: "u2", name: "Divya Nair", email: "divya@gmail.com", password: "user123", role: "seeker", skills: "Python, Data Science, SQL", avatar: "DN" }
+            ],
+            seedApplications: [
+                { id: "a1", jobId: "j1", userId: "u1", appliedAt: "2026-04-16", status: "Shortlisted", coverLetter: "I am very interested in this role." },
+                { id: "a2", jobId: "j2", userId: "u2", appliedAt: "2026-04-15", status: "Under Review", coverLetter: "I love data analytics." }
+            ],
+
+            init() {
+                if (!localStorage.getItem("ch_initialized")) {
+                    localStorage.setItem("ch_jobs", JSON.stringify(this.seedJobs));
+                    localStorage.setItem("ch_users", JSON.stringify(this.seedUsers));
+                    localStorage.setItem("ch_applications", JSON.stringify(this.seedApplications));
+                    localStorage.setItem("ch_bookmarks", JSON.stringify([]));
+                    localStorage.setItem("ch_initialized", "true");
+                }
+            },
+            getJobs() { return JSON.parse(localStorage.getItem("ch_jobs") || "[]"); },
+            getJob(id) { return this.getJobs().find(j => j.id === id); },
+            addJob(job) {
+                const jobs = this.getJobs();
+                job.id = "j" + Date.now(); job.postedAt = new Date().toISOString().split("T")[0]; job.applicants = 0; job.featured = false;
+                jobs.unshift(job); localStorage.setItem("ch_jobs", JSON.stringify(jobs)); return job;
+            },
+            deleteJob(id) { localStorage.setItem("ch_jobs", JSON.stringify(this.getJobs().filter(j => j.id !== id))); },
+            getUsers() { return JSON.parse(localStorage.getItem("ch_users") || "[]"); },
+            login(email, password) { return this.getUsers().find(u => u.email === email && u.password === password) || null; },
+            register(data) {
+                const users = this.getUsers();
+                if (users.find(u => u.email === data.email)) return { error: "Email already registered." };
+                const user = { id: "u" + Date.now(), ...data, avatar: data.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) };
+                users.push(user); localStorage.setItem("ch_users", JSON.stringify(users)); return user;
+            },
+            updateUser(id, updates) { localStorage.setItem("ch_users", JSON.stringify(this.getUsers().map(u => u.id === id ? { ...u, ...updates } : u))); },
+            getApplications() { return JSON.parse(localStorage.getItem("ch_applications") || "[]"); },
+            getApplicationsByUser(userId) { return this.getApplications().filter(a => a.userId === userId); },
+            getApplicationsByJob(jobId) { return this.getApplications().filter(a => a.jobId === jobId); },
+            hasApplied(jobId, userId) { return this.getApplications().some(a => a.jobId === jobId && a.userId === userId); },
+            apply(jobId, userId, coverLetter, phone) {
+                if (this.hasApplied(jobId, userId)) return { error: "Already applied." };
+                const apps = this.getApplications();
+                const app = { id: "a" + Date.now(), jobId, userId, appliedAt: new Date().toISOString().split("T")[0], status: "Under Review", coverLetter, phone };
+                apps.push(app); localStorage.setItem("ch_applications", JSON.stringify(apps));
+                localStorage.setItem("ch_jobs", JSON.stringify(this.getJobs().map(j => j.id === jobId ? { ...j, applicants: (j.applicants || 0) + 1 } : j)));
+                return app;
+            },
+            getBookmarks(userId) { return JSON.parse(localStorage.getItem("ch_bookmarks") || "[]").filter(b => b.userId === userId).map(b => b.jobId); },
+            toggleBookmark(jobId, userId) {
+                let bm = JSON.parse(localStorage.getItem("ch_bookmarks") || "[]");
+                const idx = bm.findIndex(b => b.jobId === jobId && b.userId === userId);
+                if (idx >= 0) bm.splice(idx, 1); else bm.push({ jobId, userId });
+                localStorage.setItem("ch_bookmarks", JSON.stringify(bm)); return idx < 0;
+            },
+            getSession() { const s = localStorage.getItem("ch_session"); return s ? JSON.parse(s) : null; },
+            setSession(user) { localStorage.setItem("ch_session", JSON.stringify(user)); },
+            clearSession() { localStorage.removeItem("ch_session"); },
+            getStats() { return { totalJobs: this.getJobs().length, totalUsers: this.getUsers().filter(u => u.role === "seeker").length, totalEmployers: this.getUsers().filter(u => u.role === "employer").length, totalApplications: this.getApplications().length }; }
+        };
+
+        /* ============================================================
+           NAVBAR
+           ============================================================ */
+        function Navbar({ user, onNavigate, onLogout, onAuthOpen, currentView }) {
+            const [menuOpen, setMenuOpen] = React.useState(false);
+            const [scrolled, setScrolled] = React.useState(false);
+            React.useEffect(() => {
+                const h = () => setScrolled(window.scrollY > 20);
+                window.addEventListener("scroll", h); return () => window.removeEventListener("scroll", h);
+            }, []);
+            const navLinks = [{ label: "Home", view: "home" }, { label: "Jobs", view: "jobs" }, { label: "Internships", view: "internships" }, { label: "Companies", view: "companies" }];
+            return (
+                <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
+                    <div className="nav-container">
+                        <div className="nav-logo" onClick={() => onNavigate("home")}>
+                            <span className="logo-icon">💼</span>
+                            <span className="logo-text">Career<span className="logo-accent">Hub</span></span>
+                        </div>
+                        <ul className={`nav-links ${menuOpen ? "nav-links-open" : ""}`}>
+                            {navLinks.map(link => (
+                                <li key={link.view}>
+                                    <a href="#" className={`nav-link ${currentView === link.view ? "nav-link-active" : ""}`}
+                                        onClick={e => { e.preventDefault(); onNavigate(link.view); setMenuOpen(false); }}>{link.label}</a>
+                                </li>
+                            ))}
+                            {user && <li><a href="#" className={`nav-link ${currentView === "dashboard" ? "nav-link-active" : ""}`} onClick={e => { e.preventDefault(); onNavigate("dashboard"); setMenuOpen(false); }}>{user.role === "employer" ? "My Jobs" : "Dashboard"}</a></li>}
+                            {user && user.role === "employer" && <li><a href="#" className={`nav-link ${currentView === "postjob" ? "nav-link-active" : ""}`} onClick={e => { e.preventDefault(); onNavigate("postjob"); setMenuOpen(false); }}>Post a Job</a></li>}
+                        </ul>
+                        <div className="nav-auth">
+                            {user ? (
+                                <div className="nav-user-menu">
+                                    <div className="nav-avatar" title={user.name}>{user.avatar}</div>
+                                    <div className="nav-dropdown">
+                                        <div className="dropdown-info">
+                                            <span className="dropdown-name">{user.name}</span>
+                                            <span className="dropdown-role">{user.role === "employer" ? "Employer" : "Job Seeker"}</span>
+                                        </div>
+                                        <button className="dropdown-item" onClick={() => onNavigate("dashboard")}><i className="fa fa-tachometer-alt"></i> Dashboard</button>
+                                        {user.role === "employer" && <button className="dropdown-item" onClick={() => onNavigate("postjob")}><i className="fa fa-plus-circle"></i> Post Job</button>}
+                                        <button className="dropdown-item dropdown-logout" onClick={onLogout}><i className="fa fa-sign-out-alt"></i> Logout</button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <button className="btn btn-outline" onClick={() => onAuthOpen("login")}>Login</button>
+                                    <button className="btn btn-primary" onClick={() => onAuthOpen("register")}>Register</button>
+                                </>
+                            )}
+                            <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+                                <span></span><span></span><span></span>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            );
+        }
+
+        /* ============================================================
+           AUTH MODAL
+           ============================================================ */
+        function AuthModal({ mode, onClose, onLogin }) {
+            const [view, setView] = React.useState(mode);
+            const [form, setForm] = React.useState({ name: "", email: "", password: "", role: "seeker", company: "", skills: "" });
+            const [error, setError] = React.useState("");
+            const [loading, setLoading] = React.useState(false);
+            const [success, setSuccess] = React.useState("");
+            const h = e => { setForm({ ...form, [e.target.name]: e.target.value }); setError(""); };
+            const handleLogin = e => {
+                e.preventDefault(); setLoading(true);
+                setTimeout(() => {
+                    const user = DB.login(form.email, form.password);
+                    setLoading(false);
+                    if (user) { DB.setSession(user); onLogin(user); }
+                    else setError("Invalid credentials. Try: arjun@gmail.com / user123");
+                }, 600);
+            };
+            const handleRegister = e => {
+                e.preventDefault();
+                if (!form.name || !form.email || !form.password) { setError("Please fill all required fields."); return; }
+                if (form.password.length < 6) { setError("Password must be at least 6 characters."); return; }
+                if (form.role === "employer" && !form.company) { setError("Company name is required."); return; }
+                setLoading(true);
+                setTimeout(() => {
+                    const result = DB.register(form); setLoading(false);
+                    if (result.error) setError(result.error);
+                    else { setSuccess("Account created! Logging you in..."); setTimeout(() => { DB.setSession(result); onLogin(result); }, 1000); }
+                }, 700);
+            };
+            return (
+                <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+                    <div className="modal-box auth-modal">
+                        <button className="modal-close" onClick={onClose}>✕</button>
+                        <div className="auth-tabs">
+                            <button className={`auth-tab ${view === "login" ? "auth-tab-active" : ""}`} onClick={() => { setView("login"); setError(""); }}>Login</button>
+                            <button className={`auth-tab ${view === "register" ? "auth-tab-active" : ""}`} onClick={() => { setView("register"); setError(""); }}>Register</button>
+                        </div>
+                        {view === "login" ? (
+                            <form className="auth-form" onSubmit={handleLogin}>
+                                <div className="auth-logo">💼 CareerHub</div>
+                                <p className="auth-subtitle">Welcome back! Sign in to continue.</p>
+                                <div className="demo-hint"><strong>Demo accounts:</strong><br />👤 arjun@gmail.com / user123 (Job Seeker)<br />🏢 ravi@technova.com / emp123 (Employer)</div>
+                                {error && <div className="form-error"><i className="fa fa-exclamation-circle"></i> {error}</div>}
+                                <div className="form-group"><label>Email Address</label>
+                                    <div className="input-wrap"><i className="fa fa-envelope input-icon"></i><input name="email" type="email" placeholder="your@email.com" value={form.email} onChange={h} required /></div></div>
+                                <div className="form-group"><label>Password</label>
+                                    <div className="input-wrap"><i className="fa fa-lock input-icon"></i><input name="password" type="password" placeholder="Your password" value={form.password} onChange={h} required /></div></div>
+                                <button type="submit" className={`btn btn-primary btn-full ${loading ? "btn-loading" : ""}`} disabled={loading}>
+                                    {loading ? <span className="spinner"></span> : "Sign In"}</button>
+                                <p className="auth-switch">No account? <span onClick={() => setView("register")}>Register here</span></p>
+                            </form>
+                        ) : (
+                            <form className="auth-form" onSubmit={handleRegister}>
+                                <div className="auth-logo">💼 CareerHub</div>
+                                <p className="auth-subtitle">Create your free account today.</p>
+                                {error && <div className="form-error"><i className="fa fa-exclamation-circle"></i> {error}</div>}
+                                {success && <div className="form-success"><i className="fa fa-check-circle"></i> {success}</div>}
+                                <div className="role-selector">
+                                    <button type="button" className={`role-btn ${form.role === "seeker" ? "role-active" : ""}`} onClick={() => setForm({ ...form, role: "seeker" })}><span>👨‍💼</span> Job Seeker</button>
+                                    <button type="button" className={`role-btn ${form.role === "employer" ? "role-active" : ""}`} onClick={() => setForm({ ...form, role: "employer" })}><span>🏢</span> Employer</button>
+                                </div>
+                                <div className="form-group"><label>Full Name *</label>
+                                    <div className="input-wrap"><i className="fa fa-user input-icon"></i><input name="name" type="text" placeholder="Your full name" value={form.name} onChange={h} required /></div></div>
+                                <div className="form-group"><label>Email Address *</label>
+                                    <div className="input-wrap"><i className="fa fa-envelope input-icon"></i><input name="email" type="email" placeholder="your@email.com" value={form.email} onChange={h} required /></div></div>
+                                <div className="form-group"><label>Password *</label>
+                                    <div className="input-wrap"><i className="fa fa-lock input-icon"></i><input name="password" type="password" placeholder="Min. 6 characters" value={form.password} onChange={h} required /></div></div>
+                                {form.role === "employer"
+                                    ? <div className="form-group"><label>Company Name *</label><div className="input-wrap"><i className="fa fa-building input-icon"></i><input name="company" type="text" placeholder="Your company" value={form.company} onChange={h} /></div></div>
+                                    : <div className="form-group"><label>Skills (optional)</label><div className="input-wrap"><i className="fa fa-code input-icon"></i><input name="skills" type="text" placeholder="React, Python, SQL..." value={form.skills} onChange={h} /></div></div>}
+                                <button type="submit" className={`btn btn-primary btn-full ${loading ? "btn-loading" : ""}`} disabled={loading}>
+                                    {loading ? <span className="spinner"></span> : "Create Account"}</button>
+                                <p className="auth-switch">Have an account? <span onClick={() => setView("login")}>Sign in</span></p>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        function Hero({ onNavigate, user }) {
+            const [count, setCount] = React.useState({ jobs: 0, companies: 0, placed: 0 });
+            const [searchQ, setSearchQ] = React.useState("");
+            const [loc, setLoc] = React.useState("");
+            React.useEffect(() => {
+                const targets = { jobs: 1200, companies: 350, placed: 8500 };
+                let step = 0; const steps = 60; const timer = setInterval(() => {
+                    step++; const p = step / steps;
+                    setCount({ jobs: Math.floor(targets.jobs * p), companies: Math.floor(targets.companies * p), placed: Math.floor(targets.placed * p) });
+                    if (step >= steps) clearInterval(timer);
+                }, 33); return () => clearInterval(timer);
+            }, []);
+            const handleSearch = e => { e.preventDefault(); onNavigate("jobs", { query: searchQ, location: loc }); };
+            const categories = [{ icon: "💻", label: "Technology" }, { icon: "📊", label: "Data Science" }, { icon: "🎨", label: "Design" }, { icon: "📢", label: "Marketing" }, { icon: "💰", label: "Finance" }, { icon: "👥", label: "Human Resources" }];
+            return (
+                <section className="hero-wrap">
+                    <div className="hero-inner">
+                        <div className="hero-bg">
+                            <div className="hero-blob hero-blob-1"></div>
+                            <div className="hero-blob hero-blob-2"></div>
+                            <div className="hero-blob hero-blob-3"></div>
+                        </div>
+                        <div className="hero-content">
+                            <div className="hero-badge"><span className="badge-dot"></span><span>🔥 1,200+ Active Job Listings</span></div>
+                            <h1 className="hero-title">Find Your <span className="hero-highlight">Dream Career</span><br />With CareerHub</h1>
+                            <p className="hero-subtitle">India's fastest-growing job portal connecting talented professionals with top companies. Discover opportunities that match your ambition.</p>
+                            <form className="hero-search" onSubmit={handleSearch}>
+                                <div className="search-field sf-pad">
+                                    <i className="fa fa-search search-icon"></i>
+                                    <input type="text" placeholder="Job title, skills, keywords..." value={searchQ} onChange={e => setSearchQ(e.target.value)} />
+                                </div>
+                                <div className="search-divider"></div>
+                                <div className="search-field sf-pad">
+                                    <i className="fa fa-map-marker-alt search-icon"></i>
+                                    <select value={loc} onChange={e => setLoc(e.target.value)}>
+                                        <option value="">All Locations</option>
+                                        {["Bangalore", "Mumbai", "Delhi", "Hyderabad", "Chennai", "Pune", "Remote"].map(l => <option key={l}>{l}</option>)}
+                                    </select>
+                                </div>
+                                <button type="submit" className="btn-search"><i className="fa fa-search"></i> Search</button>
+                            </form>
+                            <div className="hero-tags">
+                                <span className="tags-label">Trending:</span>
+                                {["React Developer", "Data Analyst", "UI/UX Design", "Remote Jobs", "Internship"].map(t => (
+                                    <button key={t} className="tag-pill" onClick={() => onNavigate("jobs", { query: t })}>{t}</button>
+                                ))}
+                            </div>
+                            <div className="hero-stats">
+                                <div className="stat-item"><span className="stat-number">{count.jobs.toLocaleString()}+</span><span className="stat-label">Open Jobs</span></div>
+                                <div className="stat-divider"></div>
+                                <div className="stat-item"><span className="stat-number">{count.companies.toLocaleString()}+</span><span className="stat-label">Companies</span></div>
+                                <div className="stat-divider"></div>
+                                <div className="stat-item"><span className="stat-number">{count.placed.toLocaleString()}+</span><span className="stat-label">Placed</span></div>
+                            </div>
+                        </div>
+                        <div className="hero-visual">
+                            <div className="hero-card floating">
+                                <div className="hcard-avatar">👨‍💻</div>
+                                <div className="hcard-info">
+                                    <span className="hcard-title">Full Stack Developer</span>
+                                    <span className="hcard-company">StartupNest • Remote</span>
+                                    <span className="hcard-salary">₹10–16 LPA</span>
+                                </div>
+                                <button className="hcard-apply" onClick={() => onNavigate("jobs")}>Apply →</button>
+                            </div>
+                            <div className="hero-card floating-slow" style={{ marginLeft: "40px" }}>
+                                <div className="hcard-avatar">🤖</div>
+                                <div className="hcard-info">
+                                    <span className="hcard-title">ML Engineer</span>
+                                    <span className="hcard-company">AI Forge Labs • Bangalore</span>
+                                    <span className="hcard-salary">₹18–25 LPA</span>
+                                </div>
+                                <button className="hcard-apply" onClick={() => onNavigate("jobs")}>Apply →</button>
+                            </div>
+                            <div className="hero-floating-badge badge-green">✅ 240 hired this week</div>
+                            <div className="hero-floating-badge badge-blue" style={{ top: "72%", left: "-10px" }}>⚡ New jobs posted daily</div>
+                        </div>
+                    </div>
+                    <div className="category-section">
+                        <p className="category-label">Browse by Category</p>
+                        <div className="category-pills">
+                            {categories.map(cat => (
+                                <button key={cat.label} className="category-pill" onClick={() => onNavigate("jobs", { category: cat.label })}>
+                                    <span>{cat.icon}</span><span>{cat.label}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        /* ============================================================
+           JOB CARD
+           ============================================================ */
+        function JobCard({ job, user, onApply, onViewDetail, bookmarks, onToggleBookmark }) {
+            const isBookmarked = bookmarks && bookmarks.includes(job.id);
+            const hasApplied = user ? DB.hasApplied(job.id, user.id) : false;
+            const typeColors = { "Full-time": "#10b981", "Part-time": "#f59e0b", "Remote": "#6366f1", "Internship": "#ec4899" };
+            return (
+                <div className={`job-card-new ${job.featured ? "job-featured" : ""}`}>
+                    {job.featured && <div className="featured-badge">⭐ Featured</div>}
+                    <div className="jc-header">
+                        <div className="jc-logo">{job.logo}</div>
+                        <div className="jc-title-wrap">
+                            <h3 className="jc-title" onClick={() => onViewDetail(job)}>{job.title}</h3>
+                            <span className="jc-company">{job.company}</span>
+                        </div>
+                        {user && <button className={`bookmark-btn ${isBookmarked ? "bookmarked" : ""}`} onClick={() => onToggleBookmark(job.id)} title="Save job">{isBookmarked ? "🔖" : "🏷️"}</button>}
+                    </div>
+                    <div className="jc-meta">
+                        <span className="jc-tag"><i className="fa fa-map-marker-alt"></i> {job.location}</span>
+                        <span className="jc-tag" style={{ color: typeColors[job.type] || "#6b7280", borderColor: typeColors[job.type] || "#6b7280" }}>{job.type}</span>
+                        <span className="jc-tag"><i className="fa fa-briefcase"></i> {job.experience}</span>
+                    </div>
+                    <p className="jc-desc">{job.description.slice(0, 110)}...</p>
+                    <div className="jc-skills">
+                        {job.requirements.slice(0, 3).map(r => <span key={r} className="skill-pill">{r}</span>)}
+                        {job.requirements.length > 3 && <span className="skill-pill skill-pill-more">+{job.requirements.length - 3}</span>}
+                    </div>
+                    <div className="jc-footer">
+                        <div className="jc-salary"><i className="fa fa-rupee-sign"></i><span>{job.salary}</span></div>
+                        <div className="jc-actions">
+                            <button className="btn btn-outline btn-sm" onClick={() => onViewDetail(job)}>Details</button>
+                            {hasApplied
+                                ? <button className="btn btn-success btn-sm" disabled>✓ Applied</button>
+                                : <button className="btn btn-primary btn-sm" onClick={() => onApply(job)}>Apply Now</button>}
+                        </div>
+                    </div>
+                    <div className="jc-bottom-bar">
+                        <span className="jc-posted">📅 {job.postedAt}</span>
+                        <span className="jc-applicants">👤 {job.applicants} applicants</span>
+                    </div>
+                </div>
+            );
+        }
+
+        /* ============================================================
+           APPLY MODAL
+           ============================================================ */
+        function ApplyModal({ job, user, onClose, onSuccess }) {
+            const [form, setForm] = React.useState({ phone: "", coverLetter: "" });
+            const [loading, setLoading] = React.useState(false);
+            const [error, setError] = React.useState("");
+            const handleSubmit = e => {
+                e.preventDefault();
+                if (!user) { setError("Please login to apply."); return; }
+                if (!form.phone) { setError("Phone number is required."); return; }
+                setLoading(true);
+                setTimeout(() => {
+                    const result = DB.apply(job.id, user.id, form.coverLetter, form.phone);
+                    setLoading(false);
+                    if (result.error) setError(result.error); else onSuccess(job);
+                }, 700);
+            };
+            return (
+                <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+                    <div className="modal-box apply-modal">
+                        <button className="modal-close" onClick={onClose}>✕</button>
+                        <div className="apply-header">
+                            <span className="apply-logo">{job.logo}</span>
+                            <div><h2 className="apply-title">Apply for {job.title}</h2><p className="apply-company">{job.company} · {job.location}</p></div>
+                        </div>
+                        {error && <div className="form-error" style={{ margin: "0 28px 0" }}><i className="fa fa-exclamation-circle"></i> {error}</div>}
+                        <form onSubmit={handleSubmit} className="auth-form">
+                            <div className="form-group"><label>Full Name</label>
+                                <div className="input-wrap"><i className="fa fa-user input-icon"></i><input type="text" value={user ? user.name : ""} readOnly style={{ background: "#f9f9f9" }} /></div></div>
+                            <div className="form-group"><label>Email</label>
+                                <div className="input-wrap"><i className="fa fa-envelope input-icon"></i><input type="email" value={user ? user.email : ""} readOnly style={{ background: "#f9f9f9" }} /></div></div>
+                            <div className="form-group"><label>Phone Number *</label>
+                                <div className="input-wrap"><i className="fa fa-phone input-icon"></i><input type="tel" placeholder="+91 XXXXX XXXXX" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} required /></div></div>
+                            <div className="form-group"><label>Cover Letter (optional)</label>
+                                <textarea placeholder="Tell the employer why you're a great fit..." value={form.coverLetter} onChange={e => setForm({ ...form, coverLetter: e.target.value })} rows="4"
+                                    style={{ width: "100%", padding: "10px 14px", borderRadius: "8px", border: "1.5px solid #e5e7eb", fontSize: "14px", resize: "vertical", fontFamily: "inherit", outline: "none" }} /></div>
+                            <button type="submit" className={`btn btn-primary btn-full ${loading ? "btn-loading" : ""}`} disabled={loading}>
+                                {loading ? <span className="spinner"></span> : <><i className="fa fa-paper-plane"></i> Submit Application</>}</button>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        /* ============================================================
+           JOB DETAIL MODAL
+           ============================================================ */
+        function JobDetailModal({ job, user, onClose, onApply, bookmarks, onToggleBookmark }) {
+            const isBookmarked = bookmarks && bookmarks.includes(job.id);
+            const hasApplied = user ? DB.hasApplied(job.id, user.id) : false;
+            return (
+                <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+                    <div className="modal-box detail-modal">
+                        <button className="modal-close" onClick={onClose}>✕</button>
+                        <div className="detail-header">
+                            <span className="detail-logo">{job.logo}</span>
+                            <div className="detail-title-wrap"><h2>{job.title}</h2><p className="detail-company">{job.company}</p></div>
+                            {user && <button className={`bookmark-btn ${isBookmarked ? "bookmarked" : ""}`} onClick={() => onToggleBookmark(job.id)}>{isBookmarked ? "🔖 Saved" : "🏷️ Save"}</button>}
+                        </div>
+                        <div className="detail-tags">
+                            <span className="jc-tag"><i className="fa fa-map-marker-alt"></i> {job.location}</span>
+                            <span className="jc-tag">{job.type}</span>
+                            <span className="jc-tag"><i className="fa fa-briefcase"></i> {job.experience}</span>
+                            <span className="jc-tag"><i className="fa fa-users"></i> {job.applicants} Applicants</span>
+                            <span className="jc-tag"><i className="fa fa-calendar"></i> Deadline: {job.deadline}</span>
+                        </div>
+                        <div className="detail-salary-box"><i className="fa fa-money-bill-wave" style={{ color: "#10b981" }}></i><span className="detail-salary">{job.salary}</span><span className="salary-label">Per Annum / Stipend</span></div>
+                        <div className="detail-section"><h3>Job Description</h3><p>{job.description}</p></div>
+                        <div className="detail-section"><h3>Required Skills</h3><div className="jc-skills" style={{ marginTop: "10px" }}>{job.requirements.map(r => <span key={r} className="skill-pill">{r}</span>)}</div></div>
+                        <div className="detail-section"><h3>About {job.company}</h3><p><strong>{job.company}</strong> is a leading organisation in the {job.category} sector, committed to innovation, quality, and employee growth. Join us and be part of something meaningful.</p></div>
+                        <div className="detail-actions">
+                            {hasApplied
+                                ? <button className="btn btn-success btn-lg" disabled>✓ Already Applied</button>
+                                : <button className="btn btn-primary btn-lg" onClick={() => onApply(job)}><i className="fa fa-paper-plane"></i> Apply Now</button>}
+                            <button className="btn btn-outline btn-lg" onClick={onClose}>Close</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        /* ============================================================
+           JOB LIST PAGE
+           ============================================================ */
+        function JobList({ user, onAuthOpen, initialFilters, onNavigate }) {
+            const [jobs, setJobs] = React.useState([]);
+            const [bookmarks, setBookmarks] = React.useState([]);
+            const [search, setSearch] = React.useState(initialFilters?.query || "");
+            const [location, setLocation] = React.useState(initialFilters?.location || "");
+            const [category, setCategory] = React.useState(initialFilters?.category || "");
+            const [jobType, setJobType] = React.useState("");
+            const [experience, setExperience] = React.useState("");
+            const [sortBy, setSortBy] = React.useState("recent");
+            const [page, setPage] = React.useState(1);
+            const [selectedJob, setSelectedJob] = React.useState(null);
+            const [applyJob, setApplyJob] = React.useState(null);
+            const [toast, setToast] = React.useState(null);
+            const PER_PAGE = 6;
+
+            React.useEffect(() => { setJobs(DB.getJobs()); if (user) setBookmarks(DB.getBookmarks(user.id)); }, [user]);
+            React.useEffect(() => {
+                if (initialFilters) {
+                    if (initialFilters.query) setSearch(initialFilters.query);
+                    if (initialFilters.category) setCategory(initialFilters.category);
+                    if (initialFilters.location) setLocation(initialFilters.location);
+                }
+            }, [initialFilters]);
+
+            const showToast = (msg, type = "success") => { setToast({ msg, type }); setTimeout(() => setToast(null), 3000); };
+            const handleApply = job => { if (!user) { onAuthOpen("login"); return; } setApplyJob(job); setSelectedJob(null); };
+            const handleApplySuccess = job => { setApplyJob(null); showToast(`🎉 Application submitted for ${job.title}!`); setJobs(DB.getJobs()); };
+            const handleToggleBookmark = jobId => { if (!user) { onAuthOpen("login"); return; } const added = DB.toggleBookmark(jobId, user.id); setBookmarks(DB.getBookmarks(user.id)); showToast(added ? "🔖 Job saved!" : "Bookmark removed."); };
+            const clearFilters = () => { setSearch(""); setLocation(""); setCategory(""); setJobType(""); setExperience(""); setPage(1); };
+
+            let filtered = jobs.filter(j => {
+                const q = search.toLowerCase();
+                const mQ = !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q) || j.requirements.some(r => r.toLowerCase().includes(q)) || j.category.toLowerCase().includes(q);
+                return mQ && (!location || j.location === location) && (!category || j.category === category) && (!jobType || j.type === jobType) && (!experience || j.experience === experience);
+            });
+            if (sortBy === "recent") filtered.sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+            else if (sortBy === "applicants") filtered.sort((a, b) => b.applicants - a.applicants);
+            else if (sortBy === "featured") filtered.sort((a, b) => b.featured - a.featured);
+
+            const totalPages = Math.ceil(filtered.length / PER_PAGE);
+            const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
+            return (
+                <div className="joblist-page">
+                    {toast && <div className={`toast toast-${toast.type}`}>{toast.msg}</div>}
+                    {applyJob && <ApplyModal job={applyJob} user={user} onClose={() => setApplyJob(null)} onSuccess={handleApplySuccess} />}
+                    {selectedJob && <JobDetailModal job={selectedJob} user={user} onClose={() => setSelectedJob(null)} onApply={handleApply} bookmarks={bookmarks} onToggleBookmark={handleToggleBookmark} />}
+
+                    <div className="joblist-header">
+                        <h1 className="joblist-title">Browse <span className="text-accent">All Jobs</span></h1>
+                        <p className="joblist-subtitle">Discover {jobs.length}+ opportunities matching your skills</p>
+                    </div>
+                    <div className="joblist-search">
+                        <div className="search-field"><i className="fa fa-search search-icon"></i><input type="text" placeholder="Search jobs, skills, companies..." value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} /></div>
+                        <div className="search-field"><i className="fa fa-map-marker-alt search-icon"></i>
+                            <select value={location} onChange={e => { setLocation(e.target.value); setPage(1); }}>
+                                <option value="">All Locations</option>
+                                {["Bangalore", "Mumbai", "Delhi", "Hyderabad", "Chennai", "Pune", "Remote"].map(l => <option key={l}>{l}</option>)}
+                            </select></div>
+                        <button className="btn btn-primary" onClick={() => setPage(1)}><i className="fa fa-search"></i> Search</button>
+                    </div>
+                    <div className="joblist-body">
+                        <aside className="filter-sidebar">
+                            <div className="filter-header"><h3>Filters</h3><button className="clear-btn" onClick={clearFilters}>Clear All</button></div>
+                            <div className="filter-group">
+                                <label className="filter-label">Category</label>
+                                {["Technology", "Data Science", "Design", "Marketing", "Finance", "Human Resources"].map(c => (
+                                    <label key={c} className="filter-check"><input type="radio" name="cat" checked={category === c} onChange={() => { setCategory(c); setPage(1); }} /><span>{c}</span></label>
+                                ))}
+                                <label className="filter-check"><input type="radio" name="cat" checked={category === ""} onChange={() => { setCategory(""); setPage(1); }} /><span>All Categories</span></label>
+                            </div>
+                            <div className="filter-group">
+                                <label className="filter-label">Job Type</label>
+                                {["Full-time", "Part-time", "Remote", "Internship"].map(t => (
+                                    <label key={t} className="filter-check"><input type="radio" name="jt" checked={jobType === t} onChange={() => { setJobType(t); setPage(1); }} /><span>{t}</span></label>
+                                ))}
+                                <label className="filter-check"><input type="radio" name="jt" checked={jobType === ""} onChange={() => { setJobType(""); setPage(1); }} /><span>All Types</span></label>
+                            </div>
+                            <div className="filter-group">
+                                <label className="filter-label">Experience</label>
+                                {["Fresher", "0–2 Years", "1–3 Years", "2–5 Years", "3–6 Years", "5+ Years"].map(e => (
+                                    <label key={e} className="filter-check"><input type="radio" name="exp" checked={experience === e} onChange={() => { setExperience(e); setPage(1); }} /><span>{e}</span></label>
+                                ))}
+                                <label className="filter-check"><input type="radio" name="exp" checked={experience === ""} onChange={() => { setExperience(""); setPage(1); }} /><span>Any Experience</span></label>
+                            </div>
+                        </aside>
+                        <div className="jobs-main">
+                            <div className="jobs-toolbar">
+                                <span className="results-count">Showing <strong>{filtered.length}</strong> jobs</span>
+                                <div className="sort-wrap"><label>Sort:</label>
+                                    <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
+                                        <option value="recent">Most Recent</option>
+                                        <option value="applicants">Most Applied</option>
+                                        <option value="featured">Featured First</option>
+                                    </select></div>
+                            </div>
+                            {paginated.length === 0 ? (
+                                <div className="empty-state"><span style={{ fontSize: "3rem" }}>🔍</span><h3>No jobs found</h3><p>Try different keywords or clear filters.</p>
+                                    <button className="btn btn-primary" onClick={clearFilters}>Clear Filters</button></div>
+                            ) : (
+                                <div className="jobs-grid">
+                                    {paginated.map(job => <JobCard key={job.id} job={job} user={user} onApply={handleApply} onViewDetail={setSelectedJob} bookmarks={bookmarks} onToggleBookmark={handleToggleBookmark} />)}
+                                </div>
+                            )}
+                            {totalPages > 1 && (
+                                <div className="pagination">
+                                    <button className="page-btn" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>‹ Prev</button>
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                                        <button key={p} className={`page-btn ${p === page ? "page-active" : ""}`} onClick={() => setPage(p)}>{p}</button>
+                                    ))}
+                                    <button className="page-btn" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>Next ›</button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        /* ============================================================
+           SEEKER DASHBOARD
+           ============================================================ */
+        function SeekerDashboard({ user, onNavigate }) {
+            const [tab, setTab] = React.useState("applied");
+            const [applications, setApplications] = React.useState([]);
+            const [bookmarkedJobs, setBookmarkedJobs] = React.useState([]);
+            const [profile, setProfile] = React.useState({ ...user });
+            const [editMode, setEditMode] = React.useState(false);
+            const [toast, setToast] = React.useState("");
+            const showToast = msg => { setToast(msg); setTimeout(() => setToast(""), 3000); };
+            React.useEffect(() => {
+                const apps = DB.getApplicationsByUser(user.id);
+                const jobs = DB.getJobs();
+                setApplications(apps.map(a => ({ ...a, job: jobs.find(j => j.id === a.jobId) })));
+                const bIds = DB.getBookmarks(user.id);
+                setBookmarkedJobs(jobs.filter(j => bIds.includes(j.id)));
+            }, [user]);
+            const handleSave = () => { DB.updateUser(user.id, profile); setEditMode(false); showToast("✅ Profile updated!"); };
+            const statusColor = { "Under Review": "#f59e0b", "Shortlisted": "#10b981", "Rejected": "#ef4444", "Hired": "#6366f1" };
+            return (
+                <div className="dashboard-page">
+                    {toast && <div className="toast toast-success">{toast}</div>}
+                    <div className="dashboard-hero">
+                        <div className="dash-avatar">{user.avatar}</div>
+                        <div className="dash-info"><h1>Welcome, {user.name}! 👋</h1><p>{user.email} · Job Seeker</p>{user.skills && <p className="dash-skills">Skills: {user.skills}</p>}</div>
+                        <div className="dash-stats">
+                            <div className="dash-stat"><span>{applications.length}</span><label>Applied</label></div>
+                            <div className="dash-stat"><span>{bookmarkedJobs.length}</span><label>Saved</label></div>
+                            <div className="dash-stat"><span>{applications.filter(a => a.status === "Shortlisted").length}</span><label>Shortlisted</label></div>
+                        </div>
+                    </div>
+                    <div className="dash-tabs">
+                        {[["applied", "📋 Applications"], ["saved", "🔖 Saved Jobs"], ["profile", "👤 My Profile"]].map(([k, l]) => (
+                            <button key={k} className={`dash-tab ${tab === k ? "dash-tab-active" : ""}`} onClick={() => setTab(k)}>{l}</button>
+                        ))}
+                    </div>
+                    {tab === "applied" && (
+                        <div className="dash-content">
+                            {applications.length === 0 ? (
+                                <div className="empty-state"><span style={{ fontSize: "3rem" }}>📋</span><h3>No applications yet</h3><p>Start exploring jobs!</p>
+                                    <button className="btn btn-primary" onClick={() => onNavigate("jobs")}>Browse Jobs</button></div>
+                            ) : (
+                                <div className="applications-list">
+                                    {applications.map(app => app.job && (
+                                        <div key={app.id} className="app-card">
+                                            <div className="app-logo">{app.job.logo}</div>
+                                            <div className="app-info">
+                                                <h4 className="app-title">{app.job.title}</h4>
+                                                <span className="app-company">{app.job.company} · {app.job.location}</span>
+                                                <span className="app-date">Applied: {app.appliedAt}</span>
+                                            </div>
+                                            <div className="app-right">
+                                                <span className="app-status" style={{ background: statusColor[app.status] + "22", color: statusColor[app.status] }}>{app.status}</span>
+                                                <span className="app-salary">{app.job.salary}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {tab === "saved" && (
+                        <div className="dash-content">
+                            {bookmarkedJobs.length === 0 ? (
+                                <div className="empty-state"><span style={{ fontSize: "3rem" }}>🔖</span><h3>No saved jobs</h3><p>Bookmark jobs you like!</p>
+                                    <button className="btn btn-primary" onClick={() => onNavigate("jobs")}>Explore Jobs</button></div>
+                            ) : (
+                                <div className="jobs-grid">
+                                    {bookmarkedJobs.map(job => (
+                                        <div key={job.id} className="job-card-new">
+                                            <div className="jc-header"><div className="jc-logo">{job.logo}</div><div className="jc-title-wrap"><h3 className="jc-title">{job.title}</h3><span className="jc-company">{job.company}</span></div></div>
+                                            <div className="jc-meta"><span className="jc-tag">{job.location}</span><span className="jc-tag">{job.type}</span></div>
+                                            <div className="jc-footer"><span className="jc-salary">{job.salary}</span><button className="btn btn-primary btn-sm" onClick={() => onNavigate("jobs")}>View &amp; Apply</button></div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {tab === "profile" && (
+                        <div className="dash-content">
+                            <div className="profile-card">
+                                <div className="profile-avatar-big">{user.avatar}</div>
+                                {editMode ? (
+                                    <div className="profile-form">
+                                        <div className="form-group"><label>Full Name</label><input type="text" value={profile.name} onChange={e => setProfile({ ...profile, name: e.target.value })} className="profile-input" /></div>
+                                        <div className="form-group"><label>Email</label><input type="email" value={profile.email} readOnly className="profile-input" style={{ background: "#f3f4f6" }} /></div>
+                                        <div className="form-group"><label>Skills</label><input type="text" value={profile.skills || ""} onChange={e => setProfile({ ...profile, skills: e.target.value })} className="profile-input" placeholder="React, Python..." /></div>
+                                        <div className="form-group"><label>New Password</label><input type="password" value={profile.password} onChange={e => setProfile({ ...profile, password: e.target.value })} className="profile-input" /></div>
+                                        <div style={{ display: "flex", gap: "12px" }}>
+                                            <button className="btn btn-primary" onClick={handleSave}>Save Changes</button>
+                                            <button className="btn btn-outline" onClick={() => setEditMode(false)}>Cancel</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="profile-display">
+                                        <h2>{user.name}</h2>
+                                        <p className="profile-email">{user.email}</p>
+                                        <p className="profile-role">Role: Job Seeker</p>
+                                        {user.skills && <p className="profile-skills">Skills: <strong>{user.skills}</strong></p>}
+                                        <button className="btn btn-primary" style={{ marginTop: "20px" }} onClick={() => setEditMode(true)}><i className="fa fa-edit"></i> Edit Profile</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        /* ============================================================
+           EMPLOYER DASHBOARD
+           ============================================================ */
+        function EmployerDashboard({ user, onNavigate }) {
+            const [myJobs, setMyJobs] = React.useState([]);
+            const [selectedApps, setSelectedApps] = React.useState(null);
+            const [toast, setToast] = React.useState("");
+            const showToast = msg => { setToast(msg); setTimeout(() => setToast(""), 3000); };
+            React.useEffect(() => { setMyJobs(DB.getJobs().filter(j => j.postedBy === user.id)); }, [user]);
+            const handleDelete = id => {
+                if (window.confirm("Delete this job posting?")) { DB.deleteJob(id); setMyJobs(DB.getJobs().filter(j => j.postedBy === user.id)); showToast("Job deleted."); }
+            };
+            const viewApps = job => {
+                const apps = DB.getApplicationsByJob(job.id);
+                const users = DB.getUsers();
+                setSelectedApps({ job, apps: apps.map(a => ({ ...a, applicant: users.find(u => u.id === a.userId) })) });
+            };
+            const total = myJobs.reduce((s, j) => s + (j.applicants || 0), 0);
+            return (
+                <div className="dashboard-page">
+                    {toast && <div className="toast toast-success">{toast}</div>}
+                    <div className="dashboard-hero employer-hero">
+                        <div className="dash-avatar employer-avatar">{user.avatar}</div>
+                        <div className="dash-info"><h1>Welcome, {user.name}! 🏢</h1><p>{user.company} · Employer Account</p></div>
+                        <div className="dash-stats">
+                            <div className="dash-stat"><span>{myJobs.length}</span><label>Jobs Posted</label></div>
+                            <div className="dash-stat"><span>{total}</span><label>Total Applicants</label></div>
+                            <div className="dash-stat"><span>{myJobs.filter(j => j.featured).length}</span><label>Featured</label></div>
+                        </div>
+                    </div>
+                    <div className="dash-tabs">
+                        <button className="dash-tab dash-tab-active">My Job Posts</button>
+                        <button className="dash-tab" onClick={() => onNavigate("postjob")}>+ Post New Job</button>
+                    </div>
+                    <div className="dash-content">
+                        {selectedApps ? (
+                            <div>
+                                <button className="btn btn-outline" style={{ marginBottom: "20px" }} onClick={() => setSelectedApps(null)}>← Back to My Jobs</button>
+                                <h3 style={{ marginBottom: "16px" }}>Applicants for: <strong>{selectedApps.job.title}</strong></h3>
+                                {selectedApps.apps.length === 0 ? <div className="empty-state"><span>👤</span><h3>No applicants yet</h3></div> : (
+                                    <div className="applicants-table-wrap">
+                                        <table className="applicants-table">
+                                            <thead><tr><th>Name</th><th>Email</th><th>Applied On</th><th>Status</th><th>Cover Letter</th></tr></thead>
+                                            <tbody>
+                                                {selectedApps.apps.map(app => (
+                                                    <tr key={app.id}>
+                                                        <td><strong>{app.applicant?.name || "Unknown"}</strong></td>
+                                                        <td>{app.applicant?.email || "—"}</td>
+                                                        <td>{app.appliedAt}</td>
+                                                        <td><span className="app-status" style={{ background: "#d1fae5", color: "#065f46" }}>{app.status}</span></td>
+                                                        <td style={{ fontSize: "12px", color: "#6b7280" }}>{(app.coverLetter || "").slice(0, 60) || "—"}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                            </div>
+                        ) : myJobs.length === 0 ? (
+                            <div className="empty-state"><span style={{ fontSize: "3rem" }}>📝</span><h3>No jobs posted yet</h3><p>Start hiring today!</p>
+                                <button className="btn btn-primary" onClick={() => onNavigate("postjob")}>Post a Job</button></div>
+                        ) : (
+                            <div className="employer-jobs-list">
+                                {myJobs.map(job => (
+                                    <div key={job.id} className="employer-job-card">
+                                        <div className="ejc-left">
+                                            <span className="ejc-logo">{job.logo}</span>
+                                            <div><h4 className="ejc-title">{job.title}</h4>
+                                                <span className="ejc-meta">{job.type} · {job.location} · {job.salary}</span>
+                                                <span className="ejc-date">Posted: {job.postedAt} · Deadline: {job.deadline}</span>
+                                            </div>
+                                        </div>
+                                        <div className="ejc-right">
+                                            <span className="ejc-applicants">{job.applicants} Applicants</span>
+                                            <button className="btn btn-outline btn-sm" onClick={() => viewApps(job)}>View Applicants</button>
+                                            <button className="btn btn-danger btn-sm" onClick={() => handleDelete(job.id)}>Delete</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        function Dashboard({ user, onNavigate, onAuthOpen }) {
+            if (!user) return (
+                <div className="empty-state" style={{ minHeight: "60vh" }}>
+                    <span style={{ fontSize: "3rem" }}>🔐</span><h3>Please log in to view your dashboard</h3>
+                    <button className="btn btn-primary" onClick={() => onAuthOpen("login")}>Login</button>
+                </div>
+            );
+            if (user.role === "employer") return <EmployerDashboard user={user} onNavigate={onNavigate} />;
+            return <SeekerDashboard user={user} onNavigate={onNavigate} />;
+        }
+
+        /* ============================================================
+           POST JOB
+           ============================================================ */
+        function PostJob({ user, onNavigate, onAuthOpen }) {
+            const [form, setForm] = React.useState({ title: "", company: user?.company || "", location: "", type: "Full-time", category: "Technology", salary: "", experience: "0–2 Years", description: "", requirements: "", deadline: "", logo: "💼" });
+            const [success, setSuccess] = React.useState(false);
+            const [loading, setLoading] = React.useState(false);
+            const [error, setError] = React.useState("");
+            const logos = ["💼", "💻", "📊", "🎨", "📢", "💰", "👥", "🚀", "⚙️", "🤖", "☁️", "✍️"];
+            const h = e => { setForm({ ...form, [e.target.name]: e.target.value }); setError(""); };
+            if (!user || user.role !== "employer") return (
+                <div className="empty-state" style={{ minHeight: "60vh" }}>
+                    <span style={{ fontSize: "3rem" }}>🔒</span><h3>Employer Access Only</h3>
+                    <p>Register or login as an Employer to post jobs.</p>
+                    <button className="btn btn-primary" onClick={() => onAuthOpen("login")}>Login as Employer</button>
+                </div>
+            );
+            const handleSubmit = e => {
+                e.preventDefault();
+                if (!form.title || !form.description || !form.salary || !form.deadline || !form.location) { setError("Please fill all required fields."); return; }
+                setLoading(true);
+                setTimeout(() => {
+                    DB.addJob({ ...form, requirements: form.requirements.split(",").map(r => r.trim()).filter(Boolean), postedBy: user.id });
+                    setLoading(false); setSuccess(true);
+                }, 800);
+            };
+            if (success) return (
+                <div className="postjob-success">
+                    <div className="success-circle">✅</div>
+                    <h2>Job Posted Successfully!</h2>
+                    <p>Your listing is now live. Candidates can apply right away.</p>
+                    <div style={{ display: "flex", gap: "16px", marginTop: "24px" }}>
+                        <button className="btn btn-primary" onClick={() => onNavigate("dashboard")}>View My Jobs</button>
+                        <button className="btn btn-outline" onClick={() => { setSuccess(false); setForm({ title: "", company: user.company || "", location: "", type: "Full-time", category: "Technology", salary: "", experience: "0–2 Years", description: "", requirements: "", deadline: "", logo: "💼" }); }}>Post Another</button>
+                    </div>
+                </div>
+            );
+            return (
+                <div className="postjob-page">
+                    <div className="postjob-header"><h1>Post a <span className="text-accent">New Job</span></h1><p>Fill in the details to attract the right candidates</p></div>
+                    <div className="postjob-container">
+                        <form className="postjob-form" onSubmit={handleSubmit}>
+                            {error && <div className="form-error"><i className="fa fa-exclamation-circle"></i> {error}</div>}
+                            <div className="form-group"><label>Job Logo / Icon</label>
+                                <div className="logo-picker">{logos.map(l => <button key={l} type="button" className={`logo-option ${form.logo === l ? "logo-selected" : ""}`} onClick={() => setForm({ ...form, logo: l })}>{l}</button>)}</div></div>
+                            <div className="form-row">
+                                <div className="form-group"><label>Job Title *</label><div className="input-wrap"><i className="fa fa-briefcase input-icon"></i><input name="title" type="text" placeholder="e.g. Frontend Developer" value={form.title} onChange={h} required /></div></div>
+                                <div className="form-group"><label>Company Name *</label><div className="input-wrap"><i className="fa fa-building input-icon"></i><input name="company" type="text" placeholder="Company name" value={form.company} onChange={h} required /></div></div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group"><label>Location *</label><div className="input-wrap"><i className="fa fa-map-marker-alt input-icon"></i>
+                                    <select name="location" value={form.location} onChange={h} required><option value="">Select location</option>{["Bangalore", "Mumbai", "Delhi", "Hyderabad", "Chennai", "Pune", "Remote"].map(l => <option key={l}>{l}</option>)}</select></div></div>
+                                <div className="form-group"><label>Job Type *</label><div className="input-wrap"><i className="fa fa-clock input-icon"></i>
+                                    <select name="type" value={form.type} onChange={h}>{["Full-time", "Part-time", "Remote", "Internship"].map(t => <option key={t}>{t}</option>)}</select></div></div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group"><label>Category *</label><div className="input-wrap"><i className="fa fa-tag input-icon"></i>
+                                    <select name="category" value={form.category} onChange={h}>{["Technology", "Data Science", "Design", "Marketing", "Finance", "Human Resources"].map(c => <option key={c}>{c}</option>)}</select></div></div>
+                                <div className="form-group"><label>Experience Level *</label><div className="input-wrap"><i className="fa fa-chart-line input-icon"></i>
+                                    <select name="experience" value={form.experience} onChange={h}>{["Fresher", "0–2 Years", "1–3 Years", "2–5 Years", "3–6 Years", "5+ Years"].map(e => <option key={e}>{e}</option>)}</select></div></div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group"><label>Salary / Stipend *</label><div className="input-wrap"><i className="fa fa-rupee-sign input-icon"></i><input name="salary" type="text" placeholder="e.g. ₹8–12 LPA" value={form.salary} onChange={h} required /></div></div>
+                                <div className="form-group"><label>Application Deadline *</label><div className="input-wrap"><i className="fa fa-calendar input-icon"></i><input name="deadline" type="date" value={form.deadline} onChange={h} required min={new Date().toISOString().split("T")[0]} /></div></div>
+                            </div>
+                            <div className="form-group"><label>Job Description *</label>
+                                <textarea name="description" placeholder="Describe the role, responsibilities, and what you're looking for..." value={form.description} onChange={h} rows="5"
+                                    style={{ width: "100%", padding: "12px 14px", borderRadius: "8px", border: "1.5px solid #e5e7eb", fontSize: "14px", resize: "vertical", fontFamily: "inherit", outline: "none" }} required /></div>
+                            <div className="form-group"><label>Required Skills (comma-separated)</label>
+                                <div className="input-wrap"><i className="fa fa-list input-icon"></i><input name="requirements" type="text" placeholder="React, JavaScript, SQL..." value={form.requirements} onChange={h} /></div>
+                                {form.requirements && <div className="jc-skills" style={{ marginTop: "10px" }}>{form.requirements.split(",").map((r, i) => r.trim() && <span key={i} className="skill-pill">{r.trim()}</span>)}</div>}</div>
+                            <button type="submit" className={`btn btn-primary btn-full ${loading ? "btn-loading" : ""}`} disabled={loading} style={{ marginTop: "8px", padding: "14px" }}>
+                                {loading ? <span className="spinner"></span> : <><i className="fa fa-paper-plane"></i> Publish Job Listing</>}</button>
+                        </form>
+                        <div className="postjob-preview">
+                            <h3 className="preview-title">Live Preview</h3>
+                            <div className="job-card-new" style={{ maxWidth: "100%" }}>
+                                <div className="jc-header">
+                                    <div className="jc-logo">{form.logo}</div>
+                                    <div className="jc-title-wrap"><h3 className="jc-title">{form.title || "Job Title"}</h3><span className="jc-company">{form.company || "Company Name"}</span></div>
+                                </div>
+                                <div className="jc-meta"><span className="jc-tag">{form.location || "Location"}</span><span className="jc-tag">{form.type}</span><span className="jc-tag">{form.experience}</span></div>
+                                <p className="jc-desc">{(form.description || "Your job description will appear here...").slice(0, 110)}{form.description.length > 110 ? "..." : ""}</p>
+                                {form.requirements && <div className="jc-skills">{form.requirements.split(",").slice(0, 4).map((r, i) => r.trim() && <span key={i} className="skill-pill">{r.trim()}</span>)}</div>}
+                                <div className="jc-footer"><span className="jc-salary">{form.salary || "Salary"}</span><button className="btn btn-primary btn-sm" disabled>Apply Now</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        function Footer({ onNavigate }) {
+            const [email, setEmail] = React.useState("");
+            const [subscribed, setSubscribed] = React.useState(false);
+            const handleSub = e => { e.preventDefault(); if (email) { setSubscribed(true); setEmail(""); } };
+            return (
+                <footer className="footer-new">
+                    <div className="footer-top">
+                        <div className="footer-col footer-brand">
+                            <div className="footer-logo">💼 Career<span>Hub</span></div>
+                            <p className="footer-tagline">India's fastest-growing job portal connecting talent with top companies across every industry.</p>
+                            <div className="footer-socials">
+                                {[["fab fa-linkedin-in", "LinkedIn"], ["fab fa-twitter", "Twitter"], ["fab fa-instagram", "Instagram"], ["fab fa-facebook-f", "Facebook"]].map(([cls, title]) => (
+                                    <a key={title} href="#" className="social-link" title={title}><i className={cls}></i></a>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="footer-col">
+                            <h4 className="footer-heading">For Job Seekers</h4>
+                            <ul className="footer-links">
+                                <li><a href="#" onClick={e => { e.preventDefault(); onNavigate("jobs"); }}>Browse All Jobs</a></li>
+                                <li><a href="#" onClick={e => { e.preventDefault(); onNavigate("internships"); }}>Internships</a></li>
+                                <li><a href="#" onClick={e => { e.preventDefault(); onNavigate("companies"); }}>Top Companies</a></li>
+                                <li><a href="#">Career Advice</a></li>
+                                <li><a href="#">Resume Tips</a></li>
+                            </ul>
+                        </div>
+                        <div className="footer-col">
+                            <h4 className="footer-heading">For Employers</h4>
+                            <ul className="footer-links">
+                                <li><a href="#" onClick={e => { e.preventDefault(); onNavigate("postjob"); }}>Post a Job</a></li>
+                                <li><a href="#">Browse Candidates</a></li>
+                                <li><a href="#">Pricing Plans</a></li>
+                                <li><a href="#">Employer Dashboard</a></li>
+                                <li><a href="#">Success Stories</a></li>
+                            </ul>
+                        </div>
+                        <div className="footer-col">
+                            <h4 className="footer-heading">Stay Updated</h4>
+                            <p style={{ color: "#9ca3af", fontSize: "14px", marginBottom: "16px" }}>Get the latest jobs delivered to your inbox.</p>
+                            <form className="footer-newsletter" onSubmit={handleSub}>
+                                {subscribed ? <div className="subscribe-success">✅ Subscribed! Thank you.</div> : (
+                                    <><input type="email" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} required />
+                                        <button type="submit" className="btn btn-primary">Subscribe</button></>
+                                )}
+                            </form>
+                            <div className="footer-badges">
+                                <span className="footer-badge">🔒 Secure</span>
+                                <span className="footer-badge">✅ Verified</span>
+                                <span className="footer-badge">⚡ Fast Apply</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="footer-bottom">
+                        <p>© 2026 CareerHub — All rights reserved. Built with ❤️ for the next generation of professionals.</p>
+                        <div className="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+                    </div>
+                </footer>
+            );
+        }
+
+        /* ============================================================
+           ROOT APP
+           ============================================================ */
+        DB.init();
+
+        function App() {
+            const [user, setUser] = React.useState(DB.getSession());
+            const [view, setView] = React.useState("home");
+            const [authModal, setAuthModal] = React.useState(null);
+            const [navFilters, setNavFilters] = React.useState(null);
+            const [toast, setToast] = React.useState(null);
+
+            const showToast = (msg, type = "success") => { setToast({ msg, type }); setTimeout(() => setToast(null), 3500); };
+            const handleLogin = u => { setUser(u); setAuthModal(null); showToast(`🎉 Welcome, ${u.name}!`); setView("home"); };
+            const handleLogout = () => { DB.clearSession(); setUser(null); setView("home"); showToast("👋 Logged out successfully."); };
+            const handleNavigate = (v, filters = null) => { setNavFilters(filters); setView(v); window.scrollTo({ top: 0, behavior: "smooth" }); };
+
+            const featuredJobs = DB.getJobs().filter(j => j.featured).slice(0, 6);
+            const bookmarks = user ? DB.getBookmarks(user.id) : [];
+            const handleApplyHome = job => { if (!user) { setAuthModal("login"); return; } handleNavigate("jobs", { query: job.title }); };
+            const handleBmHome = jobId => { if (!user) { setAuthModal("login"); return; } DB.toggleBookmark(jobId, user.id); showToast("Bookmark updated!"); };
+
+            return (
+                <div className="app-root">
+                    {toast && <div className={`toast toast-${toast.type}`}>{toast.msg}</div>}
+                    {authModal && <AuthModal mode={authModal} onClose={() => setAuthModal(null)} onLogin={handleLogin} />}
+                    <Navbar user={user} onNavigate={handleNavigate} onLogout={handleLogout} onAuthOpen={setAuthModal} currentView={view} />
+                    <main className="main-content">
+                        {view === "home" && <>
+                            <Hero onNavigate={handleNavigate} user={user} />
+                            <section className="home-featured">
+                                <div className="section-header">
+                                    <div><h2 className="section-title">Featured <span className="text-accent">Opportunities</span></h2><p className="section-sub">Hand-picked jobs from top companies</p></div>
+                                    <button className="btn btn-outline" onClick={() => handleNavigate("jobs")}>View All Jobs <i className="fa fa-arrow-right"></i></button>
+                                </div>
+                                <div className="jobs-grid">
+                                    {featuredJobs.map(job => <JobCard key={job.id} job={job} user={user} onApply={handleApplyHome} onViewDetail={j => handleNavigate("jobs", { query: j.title })} bookmarks={bookmarks} onToggleBookmark={handleBmHome} />)}
+                                </div>
+                            </section>
+                            <section className="why-section">
+                                <h2 className="section-title">Why Choose <span className="text-accent">CareerHub</span>?</h2>
+                                <div className="why-grid">
+                                    {[
+                                        { icon: "🔍", title: "Smart Job Matching", desc: "Our algorithm matches your skills to the most relevant opportunities across India." },
+                                        { icon: "⚡", title: "One-Click Apply", desc: "Apply to multiple jobs instantly with your saved profile — no repetitive forms." },
+                                        { icon: "🏢", title: "Verified Companies", desc: "Every employer is verified, so you can trust every single listing on CareerHub." },
+                                        { icon: "📊", title: "Track Applications", desc: "Monitor your application status and get real-time updates from employers." },
+                                        { icon: "🎯", title: "Fresher Friendly", desc: "Dedicated section for freshers and students with internship & entry-level roles." },
+                                        { icon: "💬", title: "Career Guidance", desc: "Access expert career tips, resume guides, and interview prep resources free." },
+                                    ].map(item => (
+                                        <div key={item.title} className="why-card">
+                                            <span className="why-icon">{item.icon}</span>
+                                            <h3 className="why-title">{item.title}</h3>
+                                            <p className="why-desc">{item.desc}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                            <section className="cta-section">
+                                <div className="cta-content">
+                                    <h2>Ready to Land Your Dream Job?</h2>
+                                    <p>Join 50,000+ professionals who found their career on CareerHub.</p>
+                                    <div className="cta-btns">
+                                        <button className="btn btn-outline-white btn-lg" onClick={() => handleNavigate("jobs")}>🔍 Browse Jobs</button>
+                                        {!user && <button className="btn btn-outline-white btn-lg" onClick={() => setAuthModal("register")}>✨ Create Free Account</button>}
+                                    </div>
+                                </div>
+                            </section>
+                        </>}
+                        {(view === "jobs" || view === "internships" || view === "companies") && (
+                            <JobList user={user} onAuthOpen={setAuthModal} initialFilters={view === "internships" ? { ...navFilters, query: "Intern" } : navFilters} onNavigate={handleNavigate} />
+                        )}
+                        {view === "dashboard" && <Dashboard user={user} onNavigate={handleNavigate} onAuthOpen={setAuthModal} />}
+                        {view === "postjob" && <PostJob user={user} onNavigate={handleNavigate} onAuthOpen={setAuthModal} />}
+                    </main>
+                    <Footer onNavigate={handleNavigate} />
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
 </body>
+
 </html>

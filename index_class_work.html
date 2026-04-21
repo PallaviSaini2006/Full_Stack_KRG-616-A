@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1 style="color: blue;">Hello World!</h1>
+    <h2 style="color: green">Hello World!</h2>
+    <h3>Hello World!</h3>
+    <h4 class="fun">Hello World!</h4>
+    <h5 id="box">Hello World!</h5>
+
+    <style>
+        p underline{
+            color: red;
+
+        }
+        h2{
+            color: green;
+        }
+        #box{
+            color: brown;
+        }
+        .fun{
+            color: purple;
+        }
+        p{
+            background-color: rgb(255, 0,0);
+            background-image: url("");
+            background-repeat: no-repeat;
+            background-repeat: repeat-x;
+            background-attachment: fixed; /*image will be fixed*/
+            background-position: center;
+            background-size: 200px;
+
+            border-width: 5px;
+            border-style: dashed;
+            border-color: blue;
+
+            border: 5px dashed blue;/*shorthand property*/
+            font-size: larger;
+            font-style: italic;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+
+            padding: 20px;
+            margin: 30px;
+
+            table{
+                border-collapse: collapse;
+                color: orange;
+                font-size: larger;
+                font-weight: bold;
+
+            }
+            thead{
+                background-color: black;
+                color: white;
+            }
+            tbody{
+                background-color: lightgray;
+            }
+            
+
+
+        }
+      
+    </style>
+    <a href="https://www.google.com">Go to Google</a>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>UID</th>
+            <th>Marks</th>
+        </tr>
+        <tr>
+            <td>pallavi</td>
+            <td>10686</td>
+            <td>99%</td>
+        </tr>
+        <tr> 
+            <td>rahul</td>
+            <td>10687</td>
+            <td>98%</td>
+        </tr>
+        <tr>
+            <th colspan="2">Total Marks</th>
+            <td>99%</td>
+        </tr>
+        <hr>
+
+        <table border="1">
+            <tr>
+                <th rowspan="2"></th>
+                <th colspan="2">Average</th>
+                <th rowspan="2">Red Eyes</th>
+            </tr>
+            <tr>
+                
+                <th>height</th>
+                <th>weight</th>
+
+            </tr>
+            <tr>
+                <th>Males</th>
+                <td>6'3</td>
+                <td>67</td>
+                <td>75%</td>
+            </tr>
+            <tr>
+                <th>Females</th>
+                <td>5'3</td>
+                <td>53</td>
+                <td>47%</td>
+            </tr>
+        </table>
+        <hr>
+        <h2>Registration Form:</h2>
+        <form action="" method="post">
+            <lable>Name: </lable>
+            <input type="text" name="form" placeholder="Enter your name......"><br><br>
+
+            <lable>Password: </lable>
+            <input type="password" name="password" placeholder="Enter your password......"><br><br>
+
+            <fieldset>
+                <legend>Gender </legend>
+            <input type="radio" name="Gender" value="Males"> Males
+            <input type="radio" name="Gender" value="Female"> Female
+            </fieldset><br>
+
+            <lable>Email: </lable>
+            <input type="email" name="email" placeholder="abc@gmail.com" required><br></br>
+        
+
+            <lable>Date: </lable>
+            <input type="date" name="Date" placeholder="enter date......."><br></br>
+
+            <label>Select City: </label>
+            <select name: "City" title:"Select City">
+                <option value" ">---select City---</option>
+                <option value"Lucknow">Lucknow</option>
+                <option value"Ambala">Ambala</option>
+                <option value"Punjab">Punjab</option>
+                <option value"Delhi">Delhi</option>
+            </select><br></br>
+
+
+            <label>Select Hobby: </label><br>
+            <input type="checkbox" name="Hobby" value="Reading"><label>Reading</label><br>
+            <input type="checkbox" name="Hobby" value="Dancing"><label>Dancing</label><br>
+            <input type="checkbox" name="Hobby" value="Painting"><label>Painting</label><br>
+            <input type="checkbox" name="Hobby" value="Acting"><label>Acting</label><br>
+
+
+            <label>Review: </label>
+            <textarea cols="70" rows="3" name="Review" placeholder="Write your Review...." disabled></textarea><br></br>
+
+            <label>Select File :</label>
+            <input type="file" name="MyFile"><br></br>
+
+            <input type="submit" value="Register">
+            <input type="reset" value="Clear">
+
+
+    </form><br></br>
+    <iframe id="player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" frameborder="0"></iframe><br></br>
+
+    <label>Select File:</label>
+
+<div id="uploadBox">
+    <input type="file" id="fileInput" hidden>
+
+    <button type="button" id="chooseBtn">
+        Choose File
+    </button>
+
+    <div id="filePreview" style="display:none;">
+        <img id="fileIcon" width="30">
+        <span id="fileName"></span>
+    </div>
+</div>
+
+<style>
+#filePreview {
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#chooseBtn {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+</style>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const chooseBtn = document.getElementById("chooseBtn");
+const filePreview = document.getElementById("filePreview");
+const fileName = document.getElementById("fileName");
+const fileIcon = document.getElementById("fileIcon");
+
+chooseBtn.onclick = () => fileInput.click();
+
+fileInput.addEventListener("change", function () {
+    if (this.files.length > 0) {
+        const file = this.files[0];
+        fileName.textContent = file.name;
+
+        const ext = file.name.split('.').pop().toLowerCase();
+
+        if (ext === "pdf") {
+            fileIcon.src = "https://cdn-icons-png.flaticon.com/512/337/337946.png";
+        } else if (ext === "doc" || ext === "docx") {
+            fileIcon.src = "https://cdn-icons-png.flaticon.com/512/888/888883.png";
+        } else if (ext === "ppt" || ext === "pptx") {
+            fileIcon.src = "https://cdn-icons-png.flaticon.com/512/888/888867.png";
+        } else {
+            fileIcon.src = "https://cdn-icons-png.flaticon.com/512/136/136549.png";
+        }
+
+        chooseBtn.style.display = "none";
+        filePreview.style.display = "flex";
+    }
+});
+</script>
+
+
+
+
+</body>
+</html>

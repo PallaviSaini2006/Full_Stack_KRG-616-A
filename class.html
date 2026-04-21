@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple List Creator</title>
+</head>
+<body>
+
+    <!-- Input box -->
+    <input type="text" id="myInput" placeholder="Enter item">
+
+    <!-- Button -->
+    <button onclick="addItem()">Add</button>
+
+    <!-- List -->
+    <ul id="myList"></ul>
+
+    <script>
+        function addItem() {
+            // Get input value
+            var value = document.getElementById("myInput").value;
+
+            // Create new list item
+            var li = document.createElement("li");
+
+            // Add text inside list item
+            li.textContent = value;
+
+            // Add list item to ul
+            document.getElementById("myList").appendChild(li);
+
+            // Clear input box
+            document.getElementById("myInput").value = "";
+        }
+    </script>
+
+</body>
+</html>
