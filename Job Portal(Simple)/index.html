@@ -4,42 +4,1205 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JobPortal - Find Your Dream Job</title>
-  <meta name="description" content="A job portal project built with React, CSS, JavaScript, and simulated Spring Boot REST API backend." />
+  <meta name="description" content="A full-stack job portal built with React, JavaScript, CSS and simulated Spring Boot REST API." />
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- React & Babel (CDN - beginner setup) -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- React & Babel via CDN (beginner approach - no build tools needed) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Our CSS -->
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* =============================================
+       style.css - JobPortal Stylesheet
+       Developer: Pallavi Saini (KRG-616-A)
+       Tech: HTML, CSS, JavaScript, React
+       Backend: Spring Boot REST API (simulated)
+    ============================================= */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333333;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: #1a73e8; }
+    a:hover { text-decoration: underline; }
+    button { cursor: pointer; font-family: 'Roboto', sans-serif; }
+    input, select, textarea { font-family: 'Roboto', sans-serif; }
+
+    .app-root { min-height: 100vh; display: flex; flex-direction: column; }
+    .main-content { flex: 1; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* NAVBAR */
+    .navbar {
+      background-color: #1a73e8;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .nav-container {
+      max-width: 1100px; margin: 0 auto; padding: 0 20px;
+      display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    .nav-logo { color: white; font-size: 22px; font-weight: 700; cursor: pointer; }
+    .nav-logo span { color: #ffd700; }
+    .nav-links { display: flex; list-style: none; gap: 4px; align-items: center; }
+    .nav-link {
+      color: rgba(255,255,255,0.85); padding: 6px 14px;
+      border-radius: 4px; font-size: 14px; cursor: pointer;
+    }
+    .nav-link:hover, .nav-link-active { background-color: rgba(255,255,255,0.15); color: white; }
+    .nav-auth { display: flex; align-items: center; gap: 10px; }
+
+    /* BUTTONS */
+    .btn {
+      padding: 8px 18px; border-radius: 4px;
+      font-size: 14px; font-weight: 500; border: none;
+      transition: background-color 0.2s;
+    }
+    .btn-primary { background-color: #1a73e8; color: white; }
+    .btn-primary:hover { background-color: #1557b0; }
+    .btn-outline { background-color: transparent; color: white; border: 1px solid white; }
+    .btn-outline:hover { background-color: rgba(255,255,255,0.15); }
+    .btn-success { background-color: #34a853; color: white; }
+    .btn-success:hover { background-color: #2d8b47; }
+    .btn-danger { background-color: #ea4335; color: white; }
+    .btn-danger:hover { background-color: #c5221f; }
+    .btn-secondary { background-color: #6c757d; color: white; }
+    .btn-secondary:hover { background-color: #545b62; }
+    .btn-full { width: 100%; }
+    .btn-sm { padding: 5px 12px; font-size: 13px; }
+
+    /* User Dropdown */
+    .nav-user-menu { position: relative; }
+    .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; color: white; font-size: 14px; }
+    .user-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background-color: #ffd700; color: #333;
+      font-weight: 700; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-dropdown {
+      position: absolute; right: 0; top: 45px;
+      background: white; border: 1px solid #ddd; border-radius: 4px;
+      min-width: 180px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: none; z-index: 200;
+    }
+    .nav-user-menu:hover .nav-dropdown { display: block; }
+    .dropdown-user-info { padding: 12px 16px; border-bottom: 1px solid #eee; background-color: #f8f9fa; }
+    .dropdown-user-info strong { display: block; font-size: 14px; color: #333; }
+    .dropdown-user-info span { font-size: 12px; color: #666; }
+    .dropdown-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; font-size: 14px; color: #333;
+      width: 100%; background: none; border: none; cursor: pointer; text-align: left;
+    }
+    .dropdown-item:hover { background-color: #f1f3f4; }
+    .dropdown-item.text-danger { color: #ea4335; }
+
+    /* HERO */
+    .hero-section {
+      background-color: #1a73e8; padding: 50px 20px;
+      text-align: center; color: white;
+    }
+    .hero-section h1 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
+    .hero-section p { font-size: 16px; margin-bottom: 30px; opacity: 0.9; }
+    .hero-search {
+      display: flex; max-width: 600px; margin: 0 auto 20px;
+      background: white; border-radius: 4px; overflow: hidden; border: 1px solid #ddd;
+    }
+    .hero-search input {
+      flex: 1; padding: 12px 16px; border: none; outline: none;
+      font-size: 14px; color: #333;
+    }
+    .hero-search button {
+      padding: 12px 24px; background-color: #fbbc04; color: #333;
+      border: none; font-weight: 700; font-size: 14px; cursor: pointer;
+    }
+    .hero-search button:hover { background-color: #f9ab00; }
+    .hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 24px; flex-wrap: wrap; }
+    .stat-box { text-align: center; }
+    .stat-box .number { font-size: 26px; font-weight: 700; }
+    .stat-box .label { font-size: 13px; opacity: 0.8; }
+
+    /* HOME SECTIONS */
+    .section { padding: 50px 20px; }
+    .section-title { font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 8px; }
+    .section-subtitle { color: #666; font-size: 14px; margin-bottom: 30px; }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .featured-section { background-color: #fff; padding: 50px 20px; }
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px; max-width: 1100px; margin: 0 auto;
+    }
+
+    /* JOB CARD */
+    .job-card {
+      background: white; border: 1px solid #ddd; border-radius: 6px;
+      padding: 20px; transition: box-shadow 0.2s;
+    }
+    .job-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .job-card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .company-logo {
+      font-size: 2rem; width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      background-color: #f1f3f4; border-radius: 6px; flex-shrink: 0;
+    }
+    .job-title { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 4px; cursor: pointer; }
+    .job-title:hover { color: #1a73e8; }
+    .company-name { font-size: 13px; color: #666; }
+    .job-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .meta-tag {
+      font-size: 12px; padding: 3px 10px; border-radius: 20px;
+      background-color: #f1f3f4; color: #555; border: 1px solid #e0e0e0;
+    }
+    .meta-tag.type-badge { background-color: #e8f0fe; color: #1a73e8; border-color: #c5d9fb; }
+    .job-desc { font-size: 13px; color: #666; margin-bottom: 12px; line-height: 1.6; }
+    .skills-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .skill-tag {
+      font-size: 11px; padding: 3px 8px;
+      background-color: #e8f5e9; color: #2d8b47;
+      border-radius: 4px; border: 1px solid #c8e6c9;
+    }
+    .job-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid #eee; padding-top: 12px;
+    }
+    .salary-text { font-size: 14px; font-weight: 700; color: #34a853; }
+    .posted-date { font-size: 12px; color: #999; }
+
+    /* JOB LIST PAGE */
+    .joblist-page { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+    .page-padding-top { padding-top: 80px; }
+    .page-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+    .page-subtitle { color: #666; margin-bottom: 24px; font-size: 14px; }
+    .search-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .search-bar input, .search-bar select {
+      padding: 9px 14px; border: 1px solid #ccc;
+      border-radius: 4px; font-size: 14px; outline: none;
+    }
+    .search-bar input:focus, .search-bar select:focus { border-color: #1a73e8; }
+    .search-bar input[type="text"] { flex: 1; min-width: 200px; }
+    .joblist-body { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: start; }
+    .filter-panel { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 18px; }
+    .filter-panel h3 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+    .filter-section { margin-bottom: 18px; }
+    .filter-section label.filter-title {
+      display: block; font-size: 13px; font-weight: 700; color: #555;
+      margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .filter-option { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 13px; color: #333; cursor: pointer; }
+    .filter-option input[type="radio"] { accent-color: #1a73e8; }
+    .clear-filters-btn { background: none; border: none; color: #1a73e8; font-size: 13px; cursor: pointer; padding: 0; font-family: 'Roboto', sans-serif; }
+    .clear-filters-btn:hover { text-decoration: underline; }
+    .jobs-results { min-width: 0; }
+    .results-info { font-size: 14px; color: #666; margin-bottom: 16px; }
+    .results-info strong { color: #333; }
+    .no-results { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 40px; text-align: center; color: #666; }
+    .no-results i { font-size: 2rem; margin-bottom: 12px; display: block; color: #ccc; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: white; border-radius: 6px;
+      width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; position: relative;
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; border-bottom: 1px solid #eee;
+    }
+    .modal-header h2 { font-size: 18px; font-weight: 700; }
+    .modal-close { background: none; border: none; font-size: 20px; color: #666; cursor: pointer; padding: 0; line-height: 1; }
+    .modal-close:hover { color: #333; }
+    .modal-body { padding: 24px; }
+
+    /* AUTH */
+    .auth-tabs { display: flex; border-bottom: 1px solid #ddd; }
+    .auth-tab-btn {
+      flex: 1; padding: 14px; background: none; border: none;
+      font-size: 15px; font-weight: 500; color: #666; cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+    }
+    .auth-tab-btn.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+    .auth-form { padding: 24px; }
+    .demo-note {
+      background-color: #e8f0fe; border: 1px solid #c5d9fb;
+      border-radius: 4px; padding: 10px 14px; font-size: 12px;
+      color: #1557b0; margin-bottom: 18px;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 500; color: #333; margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 9px 12px; border: 1px solid #ccc;
+      border-radius: 4px; font-size: 14px; color: #333; outline: none; background: white;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26,115,232,0.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .alert {
+      padding: 10px 14px; border-radius: 4px; font-size: 13px;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .alert-error { background-color: #fce8e6; border: 1px solid #f5c6c3; color: #c5221f; }
+    .alert-success { background-color: #e6f4ea; border: 1px solid #b7dfbf; color: #1e7e34; }
+    .role-selector { display: flex; gap: 10px; margin-bottom: 18px; }
+    .role-option {
+      flex: 1; padding: 10px; border: 1px solid #ccc;
+      border-radius: 4px; background: white; font-size: 13px; font-weight: 500; color: #555; cursor: pointer;
+    }
+    .role-option.selected { border-color: #1a73e8; background-color: #e8f0fe; color: #1a73e8; }
+
+    /* JOB DETAIL MODAL */
+    .jd-header { padding: 20px 24px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 14px; }
+    .jd-logo { font-size: 2.5rem; }
+    .jd-title { font-size: 18px; font-weight: 700; }
+    .jd-company { font-size: 14px; color: #666; margin-top: 4px; }
+    .jd-body { padding: 20px 24px; }
+    .jd-info-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .jd-salary-box {
+      background-color: #e6f4ea; border: 1px solid #b7dfbf;
+      border-radius: 4px; padding: 10px 16px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .jd-salary { font-size: 18px; font-weight: 700; color: #34a853; }
+    .jd-section-title { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 8px; margin-top: 14px; }
+    .jd-desc { font-size: 13px; color: #555; line-height: 1.7; }
+    .jd-footer { padding: 16px 24px; border-top: 1px solid #eee; display: flex; gap: 10px; }
+
+    /* APPLY MODAL */
+    .apply-job-info {
+      background-color: #f8f9fa; border: 1px solid #ddd;
+      border-radius: 4px; padding: 12px 14px; margin-bottom: 18px;
+    }
+    .apply-job-info .job-name { font-weight: 700; font-size: 14px; }
+    .apply-job-info .company { font-size: 13px; color: #666; }
+
+    /* DASHBOARD */
+    .dashboard-page { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+    .dashboard-welcome {
+      background-color: #1a73e8; color: white; border-radius: 6px;
+      padding: 24px 28px; margin-bottom: 28px; display: flex; align-items: center; gap: 18px;
+    }
+    .dashboard-welcome.employer-card { background-color: #0d47a1; }
+    .welcome-avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      background-color: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 700; flex-shrink: 0;
+    }
+    .welcome-info h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .welcome-info p { font-size: 14px; opacity: 0.85; }
+    .dash-tabs { display: flex; gap: 0; border-bottom: 2px solid #ddd; margin-bottom: 24px; overflow-x: auto; }
+    .dash-tab {
+      padding: 10px 20px; border: none; background: none;
+      font-size: 14px; font-weight: 500; color: #666; cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap;
+    }
+    .dash-tab.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+    .table-wrapper { overflow-x: auto; }
+    .data-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+      background: white; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;
+    }
+    .data-table th {
+      background-color: #f8f9fa; padding: 12px 14px; text-align: left;
+      font-weight: 700; color: #555; border-bottom: 1px solid #ddd;
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .data-table td { padding: 12px 14px; border-bottom: 1px solid #eee; color: #333; vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background-color: #f8f9fa; }
+    .status-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+    .status-review { background-color: #fff3e0; color: #e65100; }
+    .status-shortlisted { background-color: #e8f5e9; color: #2e7d32; }
+    .status-rejected { background-color: #fce8e6; color: #c5221f; }
+    .empty-state { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 40px; text-align: center; color: #888; }
+    .empty-state i { font-size: 2.5rem; margin-bottom: 14px; display: block; color: #ccc; }
+    .empty-state p { font-size: 14px; margin-bottom: 16px; }
+    .profile-section { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 24px; }
+    .profile-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+
+    /* POST JOB */
+    .postjob-page { max-width: 700px; margin: 0 auto; padding: 30px 20px; }
+    .postjob-page h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+    .postjob-form { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .success-screen { text-align: center; padding: 50px 20px; }
+    .success-screen .checkmark { font-size: 4rem; margin-bottom: 16px; }
+    .success-screen h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+    .success-screen p { color: #666; font-size: 14px; margin-bottom: 20px; }
+
+    /* FOOTER */
+    .footer { background-color: #333; color: #bbb; padding: 30px 20px; text-align: center; margin-top: auto; }
+    .footer-content { max-width: 1100px; margin: 0 auto; }
+    .footer-logo { font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px; }
+    .footer-logo span { color: #ffd700; }
+    .footer p { font-size: 13px; margin-bottom: 6px; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 14px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: #bbb; }
+    .footer-links a:hover { color: white; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background-color: #333; color: white; padding: 12px 20px;
+      border-radius: 4px; font-size: 14px; z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); max-width: 320px;
+    }
+    .toast-success { background-color: #34a853; }
+    .toast-error { background-color: #ea4335; }
+
+    /* LOADING */
+    .loading-state { text-align: center; padding: 40px; color: #666; }
+    .spinner {
+      display: inline-block; width: 30px; height: 30px;
+      border: 3px solid #e0e0e0; border-top-color: #1a73e8;
+      border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* API STATUS BADGE */
+    .api-status {
+      position: fixed; bottom: 20px; left: 20px;
+      background: white; border: 1px solid #ddd; border-radius: 4px;
+      padding: 8px 12px; font-size: 12px; color: #555;
+      z-index: 500; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .api-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #fbbc04; flex-shrink: 0; }
+    .api-dot.connected { background-color: #34a853; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .joblist-body { grid-template-columns: 1fr; }
+      .filter-panel { display: none; }
+      .hero-section h1 { font-size: 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .jobs-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 20px; }
+      .dashboard-welcome { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Root div where React renders -->
-  <div id="root">
-    <p style="text-align:center; padding: 40px; font-family: Roboto, sans-serif;">
-      Loading... Please wait for React + Babel to compile (~5 seconds).
-    </p>
-  </div>
+<div id="root"></div>
 
-  <!-- JavaScript files (loaded via Babel so we can use JSX) -->
-  <!-- Note: type="text/babel" is needed for JSX in browser without build tools -->
-  <!-- In a real project we would use Spring Boot REST API with axios/fetch for backend calls -->
-  <script type="text/babel" src="components/api.js"></script>
-  <script type="text/babel" src="components/Navbar.js"></script>
-  <script type="text/babel" src="components/Auth.js"></script>
-  <script type="text/babel" src="components/JobCard.js"></script>
-  <script type="text/babel" src="components/JobList.js"></script>
-  <script type="text/babel" src="components/Dashboard.js"></script>
-  <script type="text/babel" src="components/PostJob.js"></script>
-  <script type="text/babel" src="app.js"></script>
+<!-- All JavaScript in ONE script block (required for file:// - Babel can't load external JSX files) -->
+<script type="text/babel">
 
+// ============================================================
+// api.js - Simulated Spring Boot REST API Layer
+// In a real project, these would call http://localhost:8080
+// ============================================================
+const API_BASE_URL = "http://localhost:8080/api";
+
+const KEYS = {
+  jobs: "jp_jobs", users: "jp_users",
+  applications: "jp_applications", session: "jp_session", initialized: "jp_initialized"
+};
+
+const SEED_JOBS = [
+  { id: 1, title: "Frontend Developer", company: "TechNova Solutions", location: "Bangalore", type: "Full-time", category: "Technology", salary: "₹8–12 LPA", experience: "1–3 Years", description: "We are looking for a Frontend Developer skilled in React and JavaScript. You will build responsive UIs for our web platform.", requirements: ["React.js", "HTML/CSS", "JavaScript", "REST APIs", "Git"], postedBy: 1, postedAt: "2026-04-15", logo: "💻", applicants: 34 },
+  { id: 2, title: "Data Analyst Intern", company: "DataWorks Analytics", location: "Chennai", type: "Internship", category: "Data Science", salary: "₹15,000/month", experience: "Fresher", description: "Join our data team to analyse business data and build dashboards. Good learning opportunity for freshers and students.", requirements: ["Python", "SQL", "Excel", "Power BI"], postedBy: 2, postedAt: "2026-04-14", logo: "📊", applicants: 58 },
+  { id: 3, title: "Software Engineer", company: "XYZ Solutions", location: "Hyderabad", type: "Full-time", category: "Technology", salary: "₹10–15 LPA", experience: "2–5 Years", description: "Build scalable backend services using Java and Spring Boot. Work on microservices and REST APIs.", requirements: ["Java", "Spring Boot", "MySQL", "Docker"], postedBy: 3, postedAt: "2026-04-12", logo: "⚙️", applicants: 21 },
+  { id: 4, title: "UI/UX Designer", company: "CreativeMinds", location: "Remote", type: "Remote", category: "Design", salary: "₹6–10 LPA", experience: "1–3 Years", description: "Design user interfaces for web and mobile apps. Collaborate with development teams to create user-friendly designs.", requirements: ["Figma", "Adobe XD", "Prototyping", "User Research"], postedBy: 4, postedAt: "2026-04-10", logo: "🎨", applicants: 47 },
+  { id: 5, title: "Digital Marketing Executive", company: "GrowthHack Agency", location: "Mumbai", type: "Full-time", category: "Marketing", salary: "₹4–7 LPA", experience: "0–2 Years", description: "Run digital marketing campaigns on SEO, Google Ads, and social media. Freshers welcome.", requirements: ["SEO", "Google Ads", "Social Media", "Content Writing"], postedBy: 5, postedAt: "2026-04-08", logo: "📢", applicants: 62 },
+  { id: 6, title: "Backend Developer", company: "CloudBase Tech", location: "Pune", type: "Full-time", category: "Technology", salary: "₹12–18 LPA", experience: "3–6 Years", description: "Build and maintain high-performance backend APIs using Node.js and PostgreSQL.", requirements: ["Node.js", "PostgreSQL", "AWS", "REST APIs"], postedBy: 1, postedAt: "2026-04-07", logo: "🖥️", applicants: 29 },
+  { id: 7, title: "Machine Learning Engineer", company: "AI Forge Labs", location: "Bangalore", type: "Full-time", category: "Data Science", salary: "₹18–25 LPA", experience: "2–5 Years", description: "Build and deploy ML models for NLP and computer vision applications.", requirements: ["Python", "TensorFlow", "PyTorch", "Deep Learning"], postedBy: 2, postedAt: "2026-04-05", logo: "🤖", applicants: 15 },
+  { id: 8, title: "HR Recruiter", company: "PeopleFirst HR", location: "Delhi", type: "Part-time", category: "Human Resources", salary: "₹3–5 LPA", experience: "0–2 Years", description: "Screen and recruit candidates for IT and non-IT roles. Manage end-to-end hiring process.", requirements: ["Recruitment", "LinkedIn", "Communication", "MS Office"], postedBy: 4, postedAt: "2026-04-03", logo: "👥", applicants: 38 },
+  { id: 9, title: "Full Stack Developer", company: "StartupNest", location: "Remote", type: "Remote", category: "Technology", salary: "₹10–16 LPA", experience: "2–4 Years", description: "Join a startup building a SaaS platform. Work on both frontend (React) and backend (Node.js/Spring Boot).", requirements: ["React", "Node.js", "MongoDB", "Spring Boot", "Git"], postedBy: 3, postedAt: "2026-04-02", logo: "🚀", applicants: 52 },
+  { id: 10, title: "Finance Analyst", company: "WealthBridge Capital", location: "Mumbai", type: "Full-time", category: "Finance", salary: "₹7–11 LPA", experience: "1–3 Years", description: "Perform financial modelling, budgeting, and reporting. Support senior analysts with dashboards.", requirements: ["Excel", "Financial Modelling", "Accounting", "Tally"], postedBy: 5, postedAt: "2026-04-01", logo: "💰", applicants: 44 }
+];
+
+const SEED_USERS = [
+  { id: 1, name: "Ravi Kumar", email: "ravi@technova.com", password: "emp123", role: "employer", company: "TechNova Solutions" },
+  { id: 2, name: "Priya Singh", email: "priya@dataworks.com", password: "emp123", role: "employer", company: "DataWorks Analytics" },
+  { id: 3, name: "Arun Mehta", email: "arun@xyz.com", password: "emp123", role: "employer", company: "XYZ Solutions" },
+  { id: 4, name: "Sneha Joshi", email: "sneha@creative.com", password: "emp123", role: "employer", company: "CreativeMinds" },
+  { id: 5, name: "Kiran Reddy", email: "kiran@growthhack.com", password: "emp123", role: "employer", company: "GrowthHack Agency" },
+  { id: 100, name: "Arjun Sharma", email: "arjun@gmail.com", password: "user123", role: "seeker", skills: "React, JavaScript, Node.js" },
+  { id: 101, name: "Divya Nair", email: "divya@gmail.com", password: "user123", role: "seeker", skills: "Python, Data Science, SQL" }
+];
+
+const SEED_APPLICATIONS = [
+  { id: 1, jobId: 1, userId: 100, appliedAt: "2026-04-16", status: "Under Review", note: "Excited about this role!" },
+  { id: 2, jobId: 2, userId: 101, appliedAt: "2026-04-15", status: "Shortlisted", note: "I love data analytics." }
+];
+
+function initDB() {
+  if (!localStorage.getItem(KEYS.initialized)) {
+    console.log("[DB] First run - seeding data (simulating Spring Boot DB initialization)");
+    localStorage.setItem(KEYS.jobs, JSON.stringify(SEED_JOBS));
+    localStorage.setItem(KEYS.users, JSON.stringify(SEED_USERS));
+    localStorage.setItem(KEYS.applications, JSON.stringify(SEED_APPLICATIONS));
+    localStorage.setItem(KEYS.initialized, "true");
+  }
+}
+
+async function apiGetJobs() {
+  console.log(`[API] GET ${API_BASE_URL}/jobs`);
+  await new Promise(r => setTimeout(r, 100));
+  const jobs = JSON.parse(localStorage.getItem(KEYS.jobs) || "[]");
+  console.log(`[API] 200 OK - ${jobs.length} jobs returned`);
+  return jobs;
+}
+async function apiCreateJob(jobData) {
+  console.log(`[API] POST ${API_BASE_URL}/jobs`);
+  await new Promise(r => setTimeout(r, 400));
+  const jobs = JSON.parse(localStorage.getItem(KEYS.jobs) || "[]");
+  const newJob = { ...jobData, id: Date.now(), postedAt: new Date().toISOString().split("T")[0], applicants: 0 };
+  jobs.unshift(newJob);
+  localStorage.setItem(KEYS.jobs, JSON.stringify(jobs));
+  console.log(`[API] 201 Created - job id=${newJob.id}`);
+  return newJob;
+}
+async function apiDeleteJob(id) {
+  console.log(`[API] DELETE ${API_BASE_URL}/jobs/${id}`);
+  await new Promise(r => setTimeout(r, 300));
+  const jobs = JSON.parse(localStorage.getItem(KEYS.jobs) || "[]").filter(j => j.id !== id);
+  localStorage.setItem(KEYS.jobs, JSON.stringify(jobs));
+  console.log(`[API] 200 OK - job deleted`);
+}
+async function apiLogin(email, password) {
+  console.log(`[API] POST ${API_BASE_URL}/auth/login`);
+  await new Promise(r => setTimeout(r, 600));
+  const users = JSON.parse(localStorage.getItem(KEYS.users) || "[]");
+  const user = users.find(u => u.email === email && u.password === password);
+  if (user) { console.log(`[API] 200 OK - login success`); return { success: true, user }; }
+  console.log(`[API] 401 Unauthorized`);
+  return { success: false, error: "Invalid email or password." };
+}
+async function apiRegister(data) {
+  console.log(`[API] POST ${API_BASE_URL}/auth/register`);
+  await new Promise(r => setTimeout(r, 700));
+  const users = JSON.parse(localStorage.getItem(KEYS.users) || "[]");
+  if (users.find(u => u.email === data.email)) {
+    console.log(`[API] 409 Conflict - email exists`);
+    return { success: false, error: "Email is already registered." };
+  }
+  const newUser = { ...data, id: Date.now() };
+  users.push(newUser);
+  localStorage.setItem(KEYS.users, JSON.stringify(users));
+  console.log(`[API] 201 Created - user id=${newUser.id}`);
+  return { success: true, user: newUser };
+}
+async function apiGetMyApplications(userId) {
+  console.log(`[API] GET ${API_BASE_URL}/applications?userId=${userId}`);
+  await new Promise(r => setTimeout(r, 150));
+  const apps = JSON.parse(localStorage.getItem(KEYS.applications) || "[]").filter(a => a.userId === userId);
+  console.log(`[API] 200 OK - ${apps.length} applications`);
+  return apps;
+}
+async function apiApplyJob(jobId, userId, note) {
+  console.log(`[API] POST ${API_BASE_URL}/applications`);
+  await new Promise(r => setTimeout(r, 500));
+  const apps = JSON.parse(localStorage.getItem(KEYS.applications) || "[]");
+  if (apps.find(a => a.jobId === jobId && a.userId === userId)) {
+    return { success: false, error: "You have already applied for this job." };
+  }
+  const newApp = { id: Date.now(), jobId, userId, appliedAt: new Date().toISOString().split("T")[0], status: "Under Review", note };
+  apps.push(newApp);
+  localStorage.setItem(KEYS.applications, JSON.stringify(apps));
+  const jobs = JSON.parse(localStorage.getItem(KEYS.jobs) || "[]").map(j => j.id === jobId ? { ...j, applicants: (j.applicants || 0) + 1 } : j);
+  localStorage.setItem(KEYS.jobs, JSON.stringify(jobs));
+  console.log(`[API] 201 Created - application submitted`);
+  return { success: true, application: newApp };
+}
+async function apiUpdateUser(id, updates) {
+  console.log(`[API] PUT ${API_BASE_URL}/users/${id}`);
+  await new Promise(r => setTimeout(r, 300));
+  const users = JSON.parse(localStorage.getItem(KEYS.users) || "[]").map(u => u.id === id ? { ...u, ...updates } : u);
+  localStorage.setItem(KEYS.users, JSON.stringify(users));
+  const updated = users.find(u => u.id === id);
+  console.log(`[API] 200 OK - user updated`);
+  return updated;
+}
+async function apiGetEmployerJobs(employerId) {
+  console.log(`[API] GET ${API_BASE_URL}/jobs?postedBy=${employerId}`);
+  await new Promise(r => setTimeout(r, 150));
+  const jobs = JSON.parse(localStorage.getItem(KEYS.jobs) || "[]");
+  return jobs.filter(j => j.postedBy === employerId);
+}
+function getSession() { const s = localStorage.getItem(KEYS.session); return s ? JSON.parse(s) : null; }
+function setSession(user) { localStorage.setItem(KEYS.session, JSON.stringify(user)); }
+function clearSession() { localStorage.removeItem(KEYS.session); }
+initDB();
+
+// ============================================================
+// Navbar Component
+// ============================================================
+function Navbar({ user, currentPage, onNavigate, onLogout, onOpenLogin, onOpenRegister }) {
+  return (
+    <nav className="navbar">
+      <div className="nav-container">
+        <div className="nav-logo" onClick={() => onNavigate("home")}>Job<span>Portal</span></div>
+        <ul className="nav-links">
+          <li><span className={`nav-link ${currentPage === "home" ? "nav-link-active" : ""}`} onClick={() => onNavigate("home")}>Home</span></li>
+          <li><span className={`nav-link ${currentPage === "jobs" ? "nav-link-active" : ""}`} onClick={() => onNavigate("jobs")}>Browse Jobs</span></li>
+          {user && user.role === "employer" && (
+            <li><span className={`nav-link ${currentPage === "postjob" ? "nav-link-active" : ""}`} onClick={() => onNavigate("postjob")}>Post a Job</span></li>
+          )}
+          {user && (
+            <li><span className={`nav-link ${currentPage === "dashboard" ? "nav-link-active" : ""}`} onClick={() => onNavigate("dashboard")}>Dashboard</span></li>
+          )}
+        </ul>
+        <div className="nav-auth">
+          {user ? (
+            <div className="nav-user-menu">
+              <div className="user-info">
+                <div className="user-avatar">{user.name.slice(0, 2).toUpperCase()}</div>
+                <span>{user.name.split(" ")[0]}</span>
+                <i className="fa fa-chevron-down" style={{fontSize: "11px"}}></i>
+              </div>
+              <div className="nav-dropdown">
+                <div className="dropdown-user-info">
+                  <strong>{user.name}</strong>
+                  <span>{user.role === "employer" ? "Employer" : "Job Seeker"}</span>
+                </div>
+                <button className="dropdown-item" onClick={() => onNavigate("dashboard")}><i className="fa fa-tachometer-alt"></i> Dashboard</button>
+                <button className="dropdown-item text-danger" onClick={onLogout}><i className="fa fa-sign-out-alt"></i> Logout</button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <button className="btn btn-outline btn-sm" onClick={onOpenLogin}>Login</button>
+              <button className="btn btn-sm" style={{backgroundColor:"#ffd700",color:"#333"}} onClick={onOpenRegister}>Register</button>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+// ============================================================
+// Auth Modal Component (Login + Register)
+// ============================================================
+function AuthModal({ defaultTab, onClose, onLogin }) {
+  const [tab, setTab] = React.useState(defaultTab || "login");
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [success, setSuccess] = React.useState("");
+  const [loginForm, setLoginForm] = React.useState({ email: "", password: "" });
+  const [regForm, setRegForm] = React.useState({ name: "", email: "", password: "", role: "seeker", company: "", skills: "" });
+
+  function handleOverlayClick(e) { if (e.target === e.currentTarget) onClose(); }
+
+  async function handleLogin(e) {
+    e.preventDefault(); setError(""); setLoading(true);
+    const result = await apiLogin(loginForm.email, loginForm.password);
+    if (result.success) { setSession(result.user); onLogin(result.user); }
+    else setError(result.error);
+    setLoading(false);
+  }
+
+  async function handleRegister(e) {
+    e.preventDefault(); setError("");
+    if (!regForm.name.trim() || !regForm.email.trim() || !regForm.password.trim()) { setError("Please fill all required fields."); return; }
+    if (regForm.password.length < 6) { setError("Password must be at least 6 characters."); return; }
+    if (regForm.role === "employer" && !regForm.company.trim()) { setError("Company name is required for employers."); return; }
+    setLoading(true);
+    const result = await apiRegister(regForm);
+    if (result.success) {
+      setSuccess("Account created! Logging you in..."); setSession(result.user);
+      setTimeout(() => onLogin(result.user), 1200);
+    } else setError(result.error);
+    setLoading(false);
+  }
+
+  return (
+    <div className="modal-overlay" onClick={handleOverlayClick}>
+      <div className="modal-box">
+        <div className="auth-tabs">
+          <button className={`auth-tab-btn ${tab === "login" ? "active" : ""}`} onClick={() => { setTab("login"); setError(""); }}>Login</button>
+          <button className={`auth-tab-btn ${tab === "register" ? "active" : ""}`} onClick={() => { setTab("register"); setError(""); }}>Register</button>
+        </div>
+
+        {tab === "login" && (
+          <form className="auth-form" onSubmit={handleLogin}>
+            <h2 style={{marginBottom:"6px",fontSize:"18px"}}>Welcome Back</h2>
+            <p style={{fontSize:"13px",color:"#666",marginBottom:"16px"}}>Sign in to your JobPortal account</p>
+            <div className="demo-note"><strong>Demo:</strong> arjun@gmail.com / user123 &nbsp;|&nbsp; ravi@technova.com / emp123</div>
+            {error && <div className="alert alert-error"><i className="fa fa-exclamation-circle"></i> {error}</div>}
+            <div className="form-group"><label>Email *</label><input type="email" placeholder="your@email.com" value={loginForm.email} onChange={e => setLoginForm({...loginForm, email: e.target.value})} required /></div>
+            <div className="form-group"><label>Password *</label><input type="password" placeholder="Your password" value={loginForm.password} onChange={e => setLoginForm({...loginForm, password: e.target.value})} required /></div>
+            <button type="submit" className="btn btn-primary btn-full" disabled={loading}>{loading ? "Signing in..." : "Sign In"}</button>
+            <p style={{textAlign:"center",fontSize:"13px",marginTop:"14px",color:"#666"}}>Don't have an account? <span style={{color:"#1a73e8",cursor:"pointer"}} onClick={() => setTab("register")}>Register here</span></p>
+          </form>
+        )}
+
+        {tab === "register" && (
+          <form className="auth-form" onSubmit={handleRegister}>
+            <h2 style={{marginBottom:"6px",fontSize:"18px"}}>Create Account</h2>
+            <p style={{fontSize:"13px",color:"#666",marginBottom:"16px"}}>Join JobPortal and find your dream job</p>
+            {error && <div className="alert alert-error"><i className="fa fa-exclamation-circle"></i> {error}</div>}
+            {success && <div className="alert alert-success"><i className="fa fa-check-circle"></i> {success}</div>}
+            <div className="form-group"><label>I am a:</label>
+              <div className="role-selector">
+                <button type="button" className={`role-option ${regForm.role === "seeker" ? "selected" : ""}`} onClick={() => setRegForm({...regForm, role: "seeker"})}>👨‍💼 Job Seeker</button>
+                <button type="button" className={`role-option ${regForm.role === "employer" ? "selected" : ""}`} onClick={() => setRegForm({...regForm, role: "employer"})}>🏢 Employer</button>
+              </div>
+            </div>
+            <div className="form-group"><label>Full Name *</label><input type="text" placeholder="Your full name" value={regForm.name} onChange={e => setRegForm({...regForm, name: e.target.value})} required /></div>
+            <div className="form-group"><label>Email *</label><input type="email" placeholder="your@email.com" value={regForm.email} onChange={e => setRegForm({...regForm, email: e.target.value})} required /></div>
+            <div className="form-group"><label>Password * (min 6 chars)</label><input type="password" placeholder="Choose a password" value={regForm.password} onChange={e => setRegForm({...regForm, password: e.target.value})} required /></div>
+            {regForm.role === "employer" && <div className="form-group"><label>Company Name *</label><input type="text" placeholder="Your company" value={regForm.company} onChange={e => setRegForm({...regForm, company: e.target.value})} /></div>}
+            {regForm.role === "seeker" && <div className="form-group"><label>Skills (optional)</label><input type="text" placeholder="e.g. React, Java, Python" value={regForm.skills} onChange={e => setRegForm({...regForm, skills: e.target.value})} /></div>}
+            <button type="submit" className="btn btn-primary btn-full" disabled={loading}>{loading ? "Creating Account..." : "Create Account"}</button>
+            <p style={{textAlign:"center",fontSize:"13px",marginTop:"14px",color:"#666"}}>Already have an account? <span style={{color:"#1a73e8",cursor:"pointer"}} onClick={() => setTab("login")}>Sign in</span></p>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// JobCard Component
+// ============================================================
+function JobCard({ job, user, onApply, onViewDetail }) {
+  return (
+    <div className="job-card">
+      <div className="job-card-header">
+        <div className="company-logo">{job.logo}</div>
+        <div>
+          <div className="job-title" onClick={() => onViewDetail(job)}>{job.title}</div>
+          <div className="company-name">{job.company}</div>
+        </div>
+      </div>
+      <div className="job-meta">
+        <span className="meta-tag"><i className="fa fa-map-marker-alt"></i> {job.location}</span>
+        <span className="meta-tag type-badge">{job.type}</span>
+        <span className="meta-tag">{job.category}</span>
+        <span className="meta-tag"><i className="fa fa-briefcase"></i> {job.experience}</span>
+      </div>
+      <p className="job-desc">{job.description.slice(0, 110)}...</p>
+      <div className="skills-wrap">
+        {job.requirements.slice(0, 3).map(skill => <span key={skill} className="skill-tag">{skill}</span>)}
+        {job.requirements.length > 3 && <span className="skill-tag">+{job.requirements.length - 3} more</span>}
+      </div>
+      <div className="job-card-footer">
+        <div>
+          <div className="salary-text">{job.salary}</div>
+          <div className="posted-date">Posted: {job.postedAt}</div>
+        </div>
+        <div style={{display:"flex",gap:"8px"}}>
+          <button className="btn btn-secondary btn-sm" onClick={() => onViewDetail(job)}>View</button>
+          <button className="btn btn-success btn-sm" onClick={() => onApply(job)}>Apply</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// JobList Component (Browse Jobs Page)
+// ============================================================
+function JobList({ user, onOpenAuth, onNavigate }) {
+  const [jobs, setJobs] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [searchText, setSearchText] = React.useState("");
+  const [filterType, setFilterType] = React.useState("All");
+  const [filterCategory, setFilterCategory] = React.useState("All");
+  const [selectedJob, setSelectedJob] = React.useState(null);
+  const [applyingJob, setApplyingJob] = React.useState(null);
+  const [applyNote, setApplyNote] = React.useState("");
+  const [applyLoading, setApplyLoading] = React.useState(false);
+  const [applyMsg, setApplyMsg] = React.useState("");
+
+  React.useEffect(() => {
+    async function load() { setLoading(true); const data = await apiGetJobs(); setJobs(data); setLoading(false); }
+    load();
+  }, []);
+
+  const jobTypes = ["All", ...new Set(jobs.map(j => j.type))];
+  const categories = ["All", ...new Set(jobs.map(j => j.category))];
+
+  const filteredJobs = jobs.filter(job => {
+    const matchText = !searchText || job.title.toLowerCase().includes(searchText.toLowerCase()) || job.company.toLowerCase().includes(searchText.toLowerCase()) || job.requirements.some(r => r.toLowerCase().includes(searchText.toLowerCase()));
+    const matchType = filterType === "All" || job.type === filterType;
+    const matchCat = filterCategory === "All" || job.category === filterCategory;
+    return matchText && matchType && matchCat;
+  });
+
+  function clearFilters() { setSearchText(""); setFilterType("All"); setFilterCategory("All"); }
+
+  async function handleApply(job) {
+    if (!user) { onOpenAuth("login"); return; }
+    if (user.role === "employer") { alert("Employers cannot apply for jobs."); return; }
+    setApplyingJob(job); setApplyNote(""); setApplyMsg("");
+  }
+
+  async function submitApplication(e) {
+    e.preventDefault(); setApplyLoading(true);
+    const result = await apiApplyJob(applyingJob.id, user.id, applyNote);
+    setApplyMsg(result.success ? "success" : result.error);
+    setApplyLoading(false);
+  }
+
+  return (
+    <div className="joblist-page page-padding-top">
+      <h1 className="page-title">Browse Jobs</h1>
+      <p className="page-subtitle">Find jobs from top companies. Powered by Spring Boot API (simulated).</p>
+
+      <div className="search-bar">
+        <input type="text" placeholder="Search by job title, company or skill..." value={searchText} onChange={e => setSearchText(e.target.value)} />
+        <button className="btn btn-primary" onClick={() => {}}><i className="fa fa-search"></i> Search</button>
+      </div>
+
+      <div className="joblist-body">
+        <div className="filter-panel">
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}>
+            <h3 style={{margin:0}}>Filters</h3>
+            <button className="clear-filters-btn" onClick={clearFilters}>Clear All</button>
+          </div>
+          <div className="filter-section">
+            <label className="filter-title">Job Type</label>
+            {jobTypes.map(type => (
+              <label key={type} className="filter-option">
+                <input type="radio" name="typeFilter" checked={filterType === type} onChange={() => setFilterType(type)} /> {type}
+              </label>
+            ))}
+          </div>
+          <div className="filter-section">
+            <label className="filter-title">Category</label>
+            {categories.map(cat => (
+              <label key={cat} className="filter-option">
+                <input type="radio" name="catFilter" checked={filterCategory === cat} onChange={() => setFilterCategory(cat)} /> {cat}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="jobs-results">
+          {loading ? (
+            <div className="loading-state"><div className="spinner"></div><p>Fetching jobs from Spring Boot API...</p></div>
+          ) : (
+            <>
+              <p className="results-info">Showing <strong>{filteredJobs.length}</strong> of {jobs.length} jobs</p>
+              {filteredJobs.length === 0 ? (
+                <div className="no-results"><i className="fa fa-search"></i><p>No jobs found.</p><button className="btn btn-secondary btn-sm" onClick={clearFilters}>Clear Filters</button></div>
+              ) : (
+                <div style={{display:"flex",flexDirection:"column",gap:"16px"}}>
+                  {filteredJobs.map(job => <JobCard key={job.id} job={job} user={user} onApply={handleApply} onViewDetail={setSelectedJob} />)}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Job Detail Modal */}
+      {selectedJob && (
+        <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) setSelectedJob(null); }}>
+          <div className="modal-box" style={{maxWidth:"600px"}}>
+            <div className="modal-header"><span></span><button className="modal-close" onClick={() => setSelectedJob(null)}>✕</button></div>
+            <div className="jd-header"><div className="jd-logo">{selectedJob.logo}</div><div><div className="jd-title">{selectedJob.title}</div><div className="jd-company">{selectedJob.company} · {selectedJob.location}</div></div></div>
+            <div className="jd-body">
+              <div className="jd-info-row">
+                <span className="meta-tag type-badge">{selectedJob.type}</span>
+                <span className="meta-tag">{selectedJob.category}</span>
+                <span className="meta-tag"><i className="fa fa-briefcase"></i> {selectedJob.experience}</span>
+                <span className="meta-tag"><i className="fa fa-users"></i> {selectedJob.applicants} applicants</span>
+              </div>
+              <div className="jd-salary-box"><i className="fa fa-money-bill-wave" style={{color:"#34a853"}}></i><span className="jd-salary">{selectedJob.salary}</span></div>
+              <div className="jd-section-title">Job Description</div>
+              <p className="jd-desc">{selectedJob.description}</p>
+              <div className="jd-section-title">Required Skills</div>
+              <div className="skills-wrap" style={{marginTop:"8px"}}>{selectedJob.requirements.map(s => <span key={s} className="skill-tag">{s}</span>)}</div>
+              <p style={{fontSize:"12px",color:"#999",marginTop:"16px"}}><i className="fa fa-calendar"></i> Posted: {selectedJob.postedAt}</p>
+            </div>
+            <div className="jd-footer">
+              <button className="btn btn-success" onClick={() => { setSelectedJob(null); handleApply(selectedJob); }}>Apply Now</button>
+              <button className="btn btn-secondary" onClick={() => setSelectedJob(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Apply Modal */}
+      {applyingJob && (
+        <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) setApplyingJob(null); }}>
+          <div className="modal-box" style={{maxWidth:"440px"}}>
+            <div className="modal-header"><h2>Apply for Job</h2><button className="modal-close" onClick={() => setApplyingJob(null)}>✕</button></div>
+            <div className="modal-body">
+              <div className="apply-job-info"><div className="job-name">{applyingJob.title}</div><div className="company">{applyingJob.company} · {applyingJob.location}</div></div>
+              {applyMsg === "success" ? (
+                <div style={{textAlign:"center",padding:"20px 0"}}>
+                  <div style={{fontSize:"3rem",marginBottom:"12px"}}>✅</div>
+                  <h3 style={{marginBottom:"8px"}}>Application Submitted!</h3>
+                  <p style={{color:"#666",fontSize:"14px"}}>You applied for <strong>{applyingJob.title}</strong> at {applyingJob.company}.</p>
+                  <button className="btn btn-primary" style={{marginTop:"16px"}} onClick={() => setApplyingJob(null)}>Done</button>
+                </div>
+              ) : (
+                <form onSubmit={submitApplication}>
+                  {applyMsg && <div className="alert alert-error"><i className="fa fa-exclamation-circle"></i> {applyMsg}</div>}
+                  <div className="form-group"><label>Name</label><input type="text" value={user ? user.name : ""} readOnly style={{background:"#f5f5f5"}} /></div>
+                  <div className="form-group"><label>Email</label><input type="text" value={user ? user.email : ""} readOnly style={{background:"#f5f5f5"}} /></div>
+                  <div className="form-group"><label>Why should we hire you? (optional)</label><textarea rows="3" placeholder="Short note to employer..." value={applyNote} onChange={e => setApplyNote(e.target.value)}></textarea></div>
+                  <div style={{display:"flex",gap:"10px"}}>
+                    <button type="submit" className="btn btn-success" disabled={applyLoading}>{applyLoading ? "Submitting..." : "Submit Application"}</button>
+                    <button type="button" className="btn btn-secondary" onClick={() => setApplyingJob(null)}>Cancel</button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// Dashboard Component
+// ============================================================
+function Dashboard({ user, onNavigate, onOpenAuth }) {
+  const [activeTab, setActiveTab] = React.useState("applications");
+  const [applications, setApplications] = React.useState([]);
+  const [allJobs, setAllJobs] = React.useState([]);
+  const [myJobs, setMyJobs] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [profileName, setProfileName] = React.useState(user ? user.name : "");
+  const [profileSkills, setProfileSkills] = React.useState(user ? user.skills || "" : "");
+  const [profileSaved, setProfileSaved] = React.useState(false);
+  const [profileLoading, setProfileLoading] = React.useState(false);
+
+  if (!user) return (
+    <div className="dashboard-page page-padding-top">
+      <div className="empty-state"><i className="fa fa-lock"></i><p>Please login to view your dashboard.</p><button className="btn btn-primary" onClick={() => onOpenAuth("login")}>Login</button></div>
+    </div>
+  );
+
+  React.useEffect(() => {
+    async function load() {
+      setLoading(true);
+      const jobs = await apiGetJobs(); setAllJobs(jobs);
+      if (user.role === "seeker") { const apps = await apiGetMyApplications(user.id); setApplications(apps); }
+      else { const empJobs = await apiGetEmployerJobs(user.id); setMyJobs(empJobs); }
+      setLoading(false);
+    }
+    load();
+  }, []);
+
+  function getJobById(id) { return allJobs.find(j => j.id === id); }
+  function getStatusClass(s) { if (s === "Shortlisted") return "status-badge status-shortlisted"; if (s === "Rejected") return "status-badge status-rejected"; return "status-badge status-review"; }
+
+  async function saveProfile(e) {
+    e.preventDefault(); setProfileLoading(true);
+    const updated = await apiUpdateUser(user.id, {name: profileName, skills: profileSkills});
+    setSession(updated); setProfileSaved(true); setProfileLoading(false);
+    setTimeout(() => setProfileSaved(false), 3000);
+  }
+
+  async function deleteJob(jobId) {
+    if (!window.confirm("Delete this job posting?")) return;
+    await apiDeleteJob(jobId); setMyJobs(myJobs.filter(j => j.id !== jobId));
+  }
+
+  return (
+    <div className="dashboard-page page-padding-top">
+      <div className={`dashboard-welcome ${user.role === "employer" ? "employer-card" : ""}`}>
+        <div className="welcome-avatar">{user.name.slice(0,2).toUpperCase()}</div>
+        <div className="welcome-info">
+          <h2>Hello, {user.name}!</h2>
+          <p>{user.role === "seeker" ? `Job Seeker · ${applications.length} application(s)` : `Employer at ${user.company || "your company"} · ${myJobs.length} job(s) posted`}</p>
+        </div>
+      </div>
+
+      {user.role === "seeker" && (
+        <>
+          <div className="dash-tabs">
+            <button className={`dash-tab ${activeTab === "applications" ? "active" : ""}`} onClick={() => setActiveTab("applications")}>My Applications ({applications.length})</button>
+            <button className={`dash-tab ${activeTab === "profile" ? "active" : ""}`} onClick={() => setActiveTab("profile")}>Edit Profile</button>
+          </div>
+          {activeTab === "applications" && (
+            loading ? <div className="loading-state"><div className="spinner"></div><p>Loading from API...</p></div>
+            : applications.length === 0 ? (
+              <div className="empty-state"><i className="fa fa-file-alt"></i><p>No applications yet.</p><button className="btn btn-primary" onClick={() => onNavigate("jobs")}>Browse Jobs</button></div>
+            ) : (
+              <div className="table-wrapper"><table className="data-table"><thead><tr><th>Job Title</th><th>Company</th><th>Applied On</th><th>Status</th></tr></thead>
+                <tbody>{applications.map(app => { const job = getJobById(app.jobId); return <tr key={app.id}><td>{job ? job.title : "Job #" + app.jobId}</td><td>{job ? job.company : "-"}</td><td>{app.appliedAt}</td><td><span className={getStatusClass(app.status)}>{app.status}</span></td></tr>; })}</tbody>
+              </table></div>
+            )
+          )}
+          {activeTab === "profile" && (
+            <div className="profile-section"><h3>Edit Your Profile</h3>
+              <form onSubmit={saveProfile}>
+                {profileSaved && <div className="alert alert-success"><i className="fa fa-check-circle"></i> Profile saved!</div>}
+                <div className="form-group"><label>Full Name</label><input type="text" value={profileName} onChange={e => setProfileName(e.target.value)} /></div>
+                <div className="form-group"><label>Email (read only)</label><input type="text" value={user.email} readOnly style={{background:"#f5f5f5"}} /></div>
+                <div className="form-group"><label>Skills</label><input type="text" value={profileSkills} onChange={e => setProfileSkills(e.target.value)} placeholder="e.g. React, Java, SQL" /></div>
+                <button type="submit" className="btn btn-primary" disabled={profileLoading}>{profileLoading ? "Saving..." : "Save Profile"}</button>
+              </form>
+            </div>
+          )}
+        </>
+      )}
+
+      {user.role === "employer" && (
+        <>
+          <div className="dash-tabs">
+            <button className={`dash-tab ${activeTab === "jobs" ? "active" : ""}`} onClick={() => setActiveTab("jobs")}>My Job Postings ({myJobs.length})</button>
+            <button className={`dash-tab ${activeTab === "profile" ? "active" : ""}`} onClick={() => setActiveTab("profile")}>Profile</button>
+          </div>
+          {activeTab === "jobs" && (
+            loading ? <div className="loading-state"><div className="spinner"></div><p>Loading jobs from API...</p></div>
+            : myJobs.length === 0 ? (
+              <div className="empty-state"><i className="fa fa-plus-circle"></i><p>No jobs posted yet.</p><button className="btn btn-primary" onClick={() => onNavigate("postjob")}>Post a Job</button></div>
+            ) : (
+              <div className="table-wrapper"><table className="data-table"><thead><tr><th>Job Title</th><th>Type</th><th>Location</th><th>Applicants</th><th>Posted</th><th>Action</th></tr></thead>
+                <tbody>{myJobs.map(job => <tr key={job.id}><td><strong>{job.title}</strong></td><td>{job.type}</td><td>{job.location}</td><td>{job.applicants}</td><td>{job.postedAt}</td><td><button className="btn btn-danger btn-sm" onClick={() => deleteJob(job.id)}>Delete</button></td></tr>)}</tbody>
+              </table></div>
+            )
+          )}
+          {activeTab === "profile" && (
+            <div className="profile-section"><h3>Company Profile</h3>
+              <form onSubmit={saveProfile}>
+                {profileSaved && <div className="alert alert-success"><i className="fa fa-check-circle"></i> Updated!</div>}
+                <div className="form-group"><label>Your Name</label><input type="text" value={profileName} onChange={e => setProfileName(e.target.value)} /></div>
+                <div className="form-group"><label>Email</label><input type="text" value={user.email} readOnly style={{background:"#f5f5f5"}} /></div>
+                <div className="form-group"><label>Company Name</label><input type="text" value={user.company || ""} readOnly style={{background:"#f5f5f5"}} /></div>
+                <button type="submit" className="btn btn-primary" disabled={profileLoading}>{profileLoading ? "Saving..." : "Save Changes"}</button>
+              </form>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// PostJob Component
+// ============================================================
+function PostJob({ user, onNavigate, onOpenAuth }) {
+  const [form, setForm] = React.useState({ title:"", company: user ? (user.company||"") : "", location:"", type:"Full-time", category:"Technology", experience:"", salary:"", description:"", requirements:"", logo:"💼" });
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [error, setError] = React.useState("");
+
+  if (!user) return <div className="postjob-page page-padding-top"><div className="empty-state"><i className="fa fa-lock"></i><p>Please login as an employer.</p><button className="btn btn-primary" onClick={() => onOpenAuth("login")}>Login</button></div></div>;
+  if (user.role !== "employer") return <div className="postjob-page page-padding-top"><div className="empty-state"><i className="fa fa-info-circle"></i><p>Only employers can post jobs.</p><button className="btn btn-primary" onClick={() => onNavigate("jobs")}>Browse Jobs</button></div></div>;
+
+  function handleChange(e) { setForm({...form, [e.target.name]: e.target.value}); }
+
+  async function handleSubmit(e) {
+    e.preventDefault(); setError("");
+    if (!form.title.trim() || !form.company.trim() || !form.location.trim() || !form.description.trim()) { setError("Please fill all required fields."); return; }
+    setLoading(true);
+    const jobData = { ...form, postedBy: user.id, requirements: form.requirements.split(",").map(r => r.trim()).filter(Boolean) };
+    await apiCreateJob(jobData);
+    setLoading(false); setSuccess(true);
+  }
+
+  const jobTypes = ["Full-time","Part-time","Internship","Remote","Contract"];
+  const categories = ["Technology","Data Science","Design","Marketing","Finance","Human Resources","Other"];
+  const logos = ["💻","📊","⚙️","🎨","📢","💰","👥","🚀","🤖","🖥️","✍️","☁️","💼"];
+
+  if (success) return (
+    <div className="postjob-page page-padding-top"><div className="success-screen">
+      <div className="checkmark">✅</div>
+      <h2>Job Posted Successfully!</h2>
+      <p>Your listing for <strong>{form.title}</strong> at {form.company} is live.</p>
+      <p style={{fontSize:"12px",color:"#999"}}>API: POST /api/jobs → 201 Created</p>
+      <div style={{display:"flex",gap:"12px",justifyContent:"center",marginTop:"20px"}}>
+        <button className="btn btn-primary" onClick={() => onNavigate("jobs")}>View All Jobs</button>
+        <button className="btn btn-secondary" onClick={() => { setSuccess(false); setForm({...form,title:"",description:"",requirements:""}); }}>Post Another</button>
+      </div>
+    </div></div>
+  );
+
+  return (
+    <div className="postjob-page page-padding-top">
+      <h1>Post a New Job</h1>
+      <p className="page-subtitle">Fill in the details to publish a job listing.</p>
+      <div className="postjob-form">
+        {error && <div className="alert alert-error" style={{marginBottom:"18px"}}><i className="fa fa-exclamation-circle"></i> {error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="form-group"><label>Job Title *</label><input type="text" name="title" placeholder="e.g. Frontend Developer" value={form.title} onChange={handleChange} required /></div>
+            <div className="form-group"><label>Company *</label><input type="text" name="company" placeholder="Company name" value={form.company} onChange={handleChange} required /></div>
+          </div>
+          <div className="form-row">
+            <div className="form-group"><label>Location *</label><input type="text" name="location" placeholder="e.g. Bangalore, Remote" value={form.location} onChange={handleChange} required /></div>
+            <div className="form-group"><label>Job Type</label><select name="type" value={form.type} onChange={handleChange}>{jobTypes.map(t => <option key={t}>{t}</option>)}</select></div>
+          </div>
+          <div className="form-row">
+            <div className="form-group"><label>Category</label><select name="category" value={form.category} onChange={handleChange}>{categories.map(c => <option key={c}>{c}</option>)}</select></div>
+            <div className="form-group"><label>Experience</label><input type="text" name="experience" placeholder="e.g. 1-3 Years" value={form.experience} onChange={handleChange} /></div>
+          </div>
+          <div className="form-group"><label>Salary</label><input type="text" name="salary" placeholder="e.g. ₹8-12 LPA" value={form.salary} onChange={handleChange} /></div>
+          <div className="form-group"><label>Job Description *</label><textarea name="description" rows="5" placeholder="Describe the role..." value={form.description} onChange={handleChange} required></textarea></div>
+          <div className="form-group"><label>Required Skills (comma-separated)</label><input type="text" name="requirements" placeholder="e.g. React, Java, MySQL" value={form.requirements} onChange={handleChange} /></div>
+          <div className="form-group"><label>Company Icon</label>
+            <div style={{display:"flex",gap:"8px",flexWrap:"wrap",marginTop:"6px"}}>
+              {logos.map(emoji => <button key={emoji} type="button" onClick={() => setForm({...form,logo:emoji})} style={{fontSize:"22px",padding:"6px",border:form.logo===emoji?"2px solid #1a73e8":"1px solid #ddd",borderRadius:"4px",background:form.logo===emoji?"#e8f0fe":"white",cursor:"pointer"}}>{emoji}</button>)}
+            </div>
+          </div>
+          <div className="form-actions">
+            <button type="submit" className="btn btn-success" disabled={loading}>{loading?"Publishing...":"Publish Job"}</button>
+            <button type="button" className="btn btn-secondary" onClick={() => onNavigate("dashboard")}>Cancel</button>
+          </div>
+          <p style={{fontSize:"12px",color:"#999",marginTop:"12px"}}>* Will call POST {API_BASE_URL}/jobs</p>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// Main App Component
+// ============================================================
+function App() {
+  const [user, setUser] = React.useState(getSession());
+  const [page, setPage] = React.useState("home");
+  const [authModal, setAuthModal] = React.useState(null);
+  const [toast, setToast] = React.useState(null);
+  const [featuredJobs, setFeaturedJobs] = React.useState([]);
+  const [homeLoading, setHomeLoading] = React.useState(true);
+  const [apiConnected, setApiConnected] = React.useState(false);
+
+  React.useEffect(() => {
+    async function load() {
+      setHomeLoading(true);
+      const jobs = await apiGetJobs();
+      setFeaturedJobs(jobs.slice(0, 6));
+      setHomeLoading(false);
+      setTimeout(() => setApiConnected(true), 1200);
+    }
+    load();
+  }, []);
+
+  function showToast(msg, type = "success") { setToast({msg, type}); setTimeout(() => setToast(null), 3000); }
+  function navigate(targetPage) { setPage(targetPage); window.scrollTo(0, 0); }
+  function handleLogin(loggedInUser) { setUser(loggedInUser); setAuthModal(null); showToast("Welcome, " + loggedInUser.name + "!"); }
+  function handleLogout() { clearSession(); setUser(null); navigate("home"); showToast("Logged out successfully."); }
+
+  return (
+    <div className="app-root">
+      {toast && <div className={`toast toast-${toast.type}`}>{toast.msg}</div>}
+      {authModal && <AuthModal defaultTab={authModal} onClose={() => setAuthModal(null)} onLogin={handleLogin} />}
+
+      <Navbar user={user} currentPage={page} onNavigate={navigate} onLogout={handleLogout} onOpenLogin={() => setAuthModal("login")} onOpenRegister={() => setAuthModal("register")} />
+
+      <main className="main-content">
+
+        {page === "home" && (
+          <div>
+            <div className="hero-section">
+              <h1>Find Your Dream Job</h1>
+              <p>Connecting job seekers with top companies across India.</p>
+              <div className="hero-search">
+                <input type="text" placeholder="Search jobs, companies, skills..." />
+                <button onClick={() => navigate("jobs")}>Search Jobs</button>
+              </div>
+              <div className="hero-stats">
+                <div className="stat-box"><div className="number">10+</div><div className="label">Job Listings</div></div>
+                <div className="stat-box"><div className="number">5</div><div className="label">Companies</div></div>
+                <div className="stat-box"><div className="number">5+</div><div className="label">Categories</div></div>
+              </div>
+            </div>
+
+            <div className="featured-section">
+              <div className="container">
+                <div className="section-header">
+                  <div><h2 className="section-title">Latest Job Listings</h2><p className="section-subtitle">Fresh opportunities from top employers</p></div>
+                  <button className="btn btn-primary" onClick={() => navigate("jobs")}>View All Jobs →</button>
+                </div>
+                {homeLoading ? (
+                  <div className="loading-state"><div className="spinner"></div><p>Loading jobs from Spring Boot API...</p></div>
+                ) : (
+                  <div className="jobs-grid">
+                    {featuredJobs.map(job => <JobCard key={job.id} job={job} user={user} onApply={() => { if (!user) { setAuthModal("login"); return; } navigate("jobs"); }} onViewDetail={() => navigate("jobs")} />)}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="section" style={{background:"#fff"}}>
+              <div className="container">
+                <h2 className="section-title" style={{textAlign:"center",marginBottom:"30px"}}>Why Use JobPortal?</h2>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(220px, 1fr))",gap:"20px"}}>
+                  {[{icon:"🔍",title:"Easy Job Search",desc:"Search and filter jobs by category, type and location."},
+                    {icon:"📋",title:"Simple Apply",desc:"Apply with just a click and track your applications."},
+                    {icon:"🏢",title:"Post Jobs",desc:"Employers can post listings and manage applicants."},
+                    {icon:"📊",title:"Track Applications",desc:"Monitor all your submitted applications in dashboard."}
+                  ].map(item => (
+                    <div key={item.title} style={{background:"#f8f9fa",border:"1px solid #ddd",borderRadius:"6px",padding:"20px",textAlign:"center"}}>
+                      <div style={{fontSize:"2rem",marginBottom:"10px"}}>{item.icon}</div>
+                      <h3 style={{fontSize:"15px",marginBottom:"8px"}}>{item.title}</h3>
+                      <p style={{fontSize:"13px",color:"#666"}}>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {!user && (
+              <div style={{backgroundColor:"#1a73e8",padding:"50px 20px",textAlign:"center",color:"white"}}>
+                <h2 style={{marginBottom:"12px",fontSize:"1.6rem"}}>Ready to Get Started?</h2>
+                <p style={{marginBottom:"24px",opacity:0.9}}>Create a free account to apply for jobs or post listings.</p>
+                <div style={{display:"flex",gap:"12px",justifyContent:"center",flexWrap:"wrap"}}>
+                  <button className="btn btn-outline" onClick={() => setAuthModal("register")}>Create Free Account</button>
+                  <button className="btn" style={{backgroundColor:"#ffd700",color:"#333"}} onClick={() => navigate("jobs")}>Browse Jobs</button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {page === "jobs" && <JobList user={user} onOpenAuth={tab => setAuthModal(tab)} onNavigate={navigate} />}
+        {page === "dashboard" && <Dashboard user={user} onNavigate={navigate} onOpenAuth={tab => setAuthModal(tab)} />}
+        {page === "postjob" && <PostJob user={user} onNavigate={navigate} onOpenAuth={tab => setAuthModal(tab)} />}
+
+      </main>
+
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-logo">Job<span>Portal</span></div>
+          <p>A Full-Stack project using React, JavaScript, CSS and Spring Boot REST API.</p>
+          <p style={{fontSize:"12px",marginTop:"4px"}}>Made by Pallavi Saini · KRG-616-A</p>
+          <div className="footer-links">
+            <a href="#" onClick={e => { e.preventDefault(); navigate("home"); }}>Home</a>
+            <a href="#" onClick={e => { e.preventDefault(); navigate("jobs"); }}>Browse Jobs</a>
+            {user && <a href="#" onClick={e => { e.preventDefault(); navigate("dashboard"); }}>Dashboard</a>}
+          </div>
+        </div>
+      </footer>
+
+      <div className="api-status">
+        <div className={`api-dot ${apiConnected ? "connected" : ""}`}></div>
+        <span>{apiConnected ? "API Connected · localhost:8080" : "Connecting to API..."}</span>
+      </div>
+    </div>
+  );
+}
+
+// Mount React app
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
 </body>
 </html>
