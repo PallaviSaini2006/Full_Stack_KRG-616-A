@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobPortal - Find Your Dream Job</title>
+  <meta name="description" content="A job portal project built with React, CSS, JavaScript, and simulated Spring Boot REST API backend." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- React & Babel (CDN - beginner setup) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Root div where React renders -->
+  <div id="root">
+    <p style="text-align:center; padding: 40px; font-family: Roboto, sans-serif;">
+      Loading... Please wait for React + Babel to compile (~5 seconds).
+    </p>
+  </div>
+
+  <!-- JavaScript files (loaded via Babel so we can use JSX) -->
+  <!-- Note: type="text/babel" is needed for JSX in browser without build tools -->
+  <!-- In a real project we would use Spring Boot REST API with axios/fetch for backend calls -->
+  <script type="text/babel" src="components/api.js"></script>
+  <script type="text/babel" src="components/Navbar.js"></script>
+  <script type="text/babel" src="components/Auth.js"></script>
+  <script type="text/babel" src="components/JobCard.js"></script>
+  <script type="text/babel" src="components/JobList.js"></script>
+  <script type="text/babel" src="components/Dashboard.js"></script>
+  <script type="text/babel" src="components/PostJob.js"></script>
+  <script type="text/babel" src="app.js"></script>
+
+</body>
+</html>
